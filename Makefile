@@ -6,7 +6,7 @@ MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --silent
 
-include .env
+# include .env
 NVIM_QUERIES := ../dotfiles/neovim/queries
 Queries := $(NVIM_QUERIES)/xquery/$(notdir $(wildcard queries/*))
 
@@ -96,7 +96,7 @@ parse:  ## parse a specific example nominated in .env
 .PHONY: parse-all
 parse-all: parse-spec parse-qt3 ## parse all examples
 	
-PHONY: parse-graph
+.PHONY: parse-graph
 parse-graph:  ## parse, then show svg grah in firefox
 	yarn parse examples/spec/$(EXAMPLE).xq -D || true 
 	firefox log.html
@@ -127,13 +127,12 @@ web:
 .PHONY: install
 install:
 	@mkdir -p bin
-	if [ -e node_modules/.bin/tree-sitter ]
-	then 
-	echo ' - upgrading via package json'
-	yarn install
-	else
-	echo ' - upgrading via package json'
-	yarn upgrade
+	@if [ -e node_modules/.bin/tree-sitter ]; then \
+		echo ' - upgrading via package json'; \
+		yarn install; \
+	else \
+		echo ' - upgrading via package json'; \
+		yarn upgrade; \
 	fi
 
 .PHONY: pr-create
@@ -160,7 +159,7 @@ rec:
  --title='treesitter '\
  --idle-time-limit 1
 
-PHONY: play
+.PHONY: play
 play:
 	@asciinema play ../tmp/rec.cast
 
