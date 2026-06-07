@@ -33,6 +33,12 @@ module.exports = grammar({
     'switch',
     'text',
     'typeswitch',
+    // MarkLogic JSON node constructors/tests
+    'object-node',
+    'array-node',
+    'number-node',
+    'boolean-node',
+    'null-node',
   ],
   word: ($) => $.identifier,
   //conflicts: ($) => [],
@@ -120,6 +126,7 @@ module.exports = grammar({
       seq(
         'declare',
         repeat($.annotation),
+        optional(seq('private', repeat($.annotation))), // MarkLogic: declare private function
         'function',
         $._EQName,
         '(',
@@ -245,7 +252,7 @@ module.exports = grammar({
     if_expr: ($) => prec(2, seq('if', field('if_test', seq('(', $._expr, ')')), 'then', field('if_consequence', $._expr_single), 'else', field('if_alternative', $._expr_single))), // 77
     try_catch_expr: ($) => prec(2, seq($.try_clause, $.catch_clause)), // 78
     try_clause: ($) => seq('try', $.enclosed_expr), // 79
-    catch_clause: ($) => seq('catch', $.catch_error_list, $.enclosed_expr), // 81
+    catch_clause: ($) => seq('catch', choice($.catch_error_list, seq('(', $.variable, ')')), $.enclosed_expr), // 81 + MarkLogic catch($var)
     catch_error_list: ($) => seq($.name_test, repeat(seq('|', $.name_test))), // 82
     or_expr: ($) => prec.left(3, seq(field('lhs', $._expr_single), 'or', field('rhs', $._expr_single))), // 83
     and_expr: ($) => prec.left(4, seq(field('lhs', $._expr_single), 'and', field('rhs', $._expr_single))), // 84
@@ -341,7 +348,13 @@ module.exports = grammar({
           $.comp_namespace_constructor, // 160
           $.comp_text_constructor, // 164
           $.comp_comment_constructor, // 165
-          $.comp_pi_constructor // 166
+          $.comp_pi_constructor, // 166
+          // MarkLogic JSON node constructors
+          $.comp_object_node_constructor,
+          $.comp_array_node_constructor,
+          $.comp_number_node_constructor,
+          $.comp_boolean_node_constructor,
+          $.comp_null_node_constructor
         )
       ), // 155
     comp_doc_constructor: ($) => seq('document', field('content', $.enclosed_expr)), // 156
@@ -352,6 +365,14 @@ module.exports = grammar({
     comp_comment_constructor: ($) => seq('comment', field('content', $.enclosed_expr)),
     comp_pi_constructor: ($) => seq('processing-instruction', field('name', choice($._ncname, seq('{', $._expr, '}'))), field('content', $.enclosed_expr)), // 166
     comp_namespace_constructor: ($) => seq('namespace', field('name', choice($._ncname, seq('{', $._expr, '}'))), field('content', $.enclosed_expr)), // 160
+    // MarkLogic JSON node constructors
+    comp_object_node_constructor: ($) => seq('object-node', field('content', $.json_object_content)),
+    json_object_content: ($) => seq('{', optional($.json_object_pair), repeat(seq(',', $.json_object_pair)), '}'),
+    json_object_pair: ($) => seq(field('key', $._expr_single), ':', field('value', $._expr_single)),
+    comp_array_node_constructor: ($) => seq('array-node', field('content', $.enclosed_expr)),
+    comp_number_node_constructor: ($) => seq('number-node', field('content', $.enclosed_expr)),
+    comp_boolean_node_constructor: ($) => seq('boolean-node', field('content', $.enclosed_expr)),
+    comp_null_node_constructor: ($) => seq('null-node', field('content', $.enclosed_expr)),
     _literal: ($) => choice($._numeric_literal, $.string_literal),
     var_ref: ($) => seq('$', $._var_name), // 131
     parenthesized_expr: ($) => seq('(', optional($._expr), ')'), // 133
@@ -395,7 +416,13 @@ module.exports = grammar({
           $.any_kind_test,
           $.comment_test,
           $.namespace_node_test,
-          $.text_test
+          $.text_test,
+          // MarkLogic JSON node tests
+          $.object_node_test,
+          $.array_node_test,
+          $.number_node_test,
+          $.boolean_node_test,
+          $.null_node_test
         )
       ),
     any_kind_test: ($) => seq('node', token.immediate('('), ')'), // 189
@@ -412,6 +439,12 @@ module.exports = grammar({
     schema_element_test: ($) => seq('schema-element', '(', field('element_name', $._EQName), ')'), //197
     schema_attribute_test: ($) => seq('schema-attribute', '(', field('attribute_name', $._EQName), ')'), //201
     pi_test: ($) => seq('processing-instruction', seq('(', optional(field('param', choice($._ncname, $.string_literal))), ')')), // 194
+    // MarkLogic JSON node tests (for type declarations like 'as object-node()')
+    object_node_test: ($) => seq('object-node', '(', optional($.string_literal), ')'),
+    array_node_test: ($) => seq('array-node', '(', optional($.string_literal), ')'),
+    number_node_test: ($) => seq('number-node', '(', optional($.string_literal), ')'),
+    boolean_node_test: ($) => seq('boolean-node', '(', optional($.string_literal), ')'),
+    null_node_test: ($) => seq('null-node', '(', optional($.string_literal), ')'),
     any_function_test: ($) => seq(repeat($.annotation), 'function', seq('(', alias('*', $.wildcard), ')')), //  // 207
     typed_function_test: ($) => seq(repeat($.annotation), 'function', '(', $.sequence_type, repeat(seq(',', $.sequence_type)), ')', $.type_declaration),
     any_map_test: ($) => seq('map', '(', alias('*', $.wildcard), ')'), // 210
