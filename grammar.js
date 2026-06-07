@@ -597,10 +597,11 @@ module.exports = grammar({
     // ^\p{C}  no invisible control characters and unused code points
 
     identifier: ($) => /[_\p{XID_Start}][-_\p{XID_Continue}]*/,
-    comment: ($) => seq('(:', repeat1(choice($.comment, prec.right(/[^:()]|[^:][)]|[(][^:]|[:][^)]/))), token.immediate(':)')),
-    //'[^:()]', // any symbol except reserved
-    //'[^:][)]', // allow closing peren which is not a comment end
-    // '[(][^:]', // allow opening peren which is not a comment start
-    // '[:][^)]', // allow ':' which is not a comment end
+    comment: ($) =>
+      seq(
+        '(:',
+        repeat1(choice($.comment, '(', ')', prec.right(/[^:():]|[:][^)]/))),
+        token.immediate(':)')
+      ),
   },
 });

@@ -6825,11 +6825,19 @@
                 "name": "comment"
               },
               {
+                "type": "STRING",
+                "value": "("
+              },
+              {
+                "type": "STRING",
+                "value": ")"
+              },
+              {
                 "type": "PREC_RIGHT",
                 "value": 0,
                 "content": {
                   "type": "PATTERN",
-                  "value": "[^:()]|[^:][)]|[(][^:]|[:][^)]"
+                  "value": "[^:():]|[:][^)]"
                 }
               }
             ]

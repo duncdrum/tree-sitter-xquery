@@ -1,0 +1,69 @@
+================================================================================
+Comments with single-char parens (GPL headers)
+================================================================================
+
+(: Copyright (C) 2015 :)
+xquery version "3.1";
+
+--------------------------------------------------------------------------------
+
+(module
+  (comment)
+  (version_declaration
+    (string_literal
+      (char_data)))
+  (main_module
+    (query_body
+      (rel_path_expr
+        (abbrev_forward_step
+          (name_test
+            (MISSING identifier)))))))
+
+================================================================================
+Doc-style GPL header before library module
+================================================================================
+
+(:
+ :
+ :  Copyright (C) 2015 Wolfgang Meier
+ :
+ :  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ :)
+xquery version "3.1";
+
+(:~
+ : Template functions
+ :)
+module namespace pages="http://www.tei-c.org/tei-simple/pages";
+
+declare function pages:load-xml($doc as xs:string) {
+    ()
+};
+
+--------------------------------------------------------------------------------
+
+(module
+  (comment)
+  (version_declaration
+    (string_literal
+      (char_data)))
+  (comment)
+  (library_module
+    (module_declaration
+      (identifier)
+      (string_literal
+        (char_data)))
+    (prolog
+      (function_declaration
+        (identifier)
+        (identifier)
+        (param_list
+          (identifier)
+          (type_declaration
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)
+                (identifier)))))
+        (enclosed_expr
+          (rel_path_expr
+            (parenthesized_expr)))))))
