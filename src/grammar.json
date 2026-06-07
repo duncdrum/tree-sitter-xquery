@@ -963,6 +963,18 @@
           "value": "declare"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "private"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
@@ -1051,35 +1063,23 @@
           "value": "declare"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "annotation"
-          }
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "private"
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "annotation"
-                  }
-                }
-              ]
+              "type": "STRING",
+              "value": "private"
             },
             {
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "annotation"
+          }
         },
         {
           "type": "STRING",
@@ -6690,6 +6690,10 @@
             },
             {
               "type": "STRING",
+              "value": "array-node"
+            },
+            {
+              "type": "STRING",
               "value": "as"
             },
             {
@@ -6711,6 +6715,10 @@
             {
               "type": "STRING",
               "value": "boundary-space"
+            },
+            {
+              "type": "STRING",
+              "value": "boolean-node"
             },
             {
               "type": "STRING",
@@ -6987,6 +6995,18 @@
             {
               "type": "STRING",
               "value": "node"
+            },
+            {
+              "type": "STRING",
+              "value": "null-node"
+            },
+            {
+              "type": "STRING",
+              "value": "number-node"
+            },
+            {
+              "type": "STRING",
+              "value": "object-node"
             },
             {
               "type": "STRING",

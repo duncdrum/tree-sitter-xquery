@@ -116,6 +116,7 @@ module.exports = grammar({
     variable_declaration: ($) =>
       seq(
         'declare',
+        optional('private'), // MarkLogic: declare private variable
         repeat($.annotation),
         'variable',
         $.variable,
@@ -125,8 +126,8 @@ module.exports = grammar({
     function_declaration: ($) =>
       seq(
         'declare',
+        optional('private'), // MarkLogic: declare private function
         repeat($.annotation),
-        optional(seq('private', repeat($.annotation))), // MarkLogic: declare private function
         'function',
         $._EQName,
         '(',
@@ -500,12 +501,14 @@ module.exports = grammar({
             'ancestor-or-self',
             'and',
             'array',
+            'array-node',
             'as',
             'ascending',
             'at',
             'attribute',
             'base-uri',
             'boundary-space',
+            'boolean-node',
             'by',
             'case',
             'cast',
@@ -575,6 +578,9 @@ module.exports = grammar({
             'no-inherit',
             'no-preserve',
             'node',
+            'null-node',
+            'number-node',
+            'object-node',
             'of',
             'only',
             'option',
