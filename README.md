@@ -1,3 +1,30 @@
+> **Fork notice**
+>
+> This is a fork of [grantmacken/tree-sitter-xquery](https://github.com/grantmacken/tree-sitter-xquery)
+> by Grant MacKenzie, MIT licensed. All grammar work through June 2023 is his.
+>
+> It is maintained here to support [xquery-rs](https://github.com/duncdrum/xquery-rs),
+> a Rust XQuery language server, and a Zed editor extension. Zed pins a grammar by
+> repository and revision, which is why a separately controlled repository is needed.
+>
+> **Private for now. This repository must become public before the Zed extension can
+> ship**, because Zed clones the grammar at build time.
+>
+> Branches:
+>
+> | Branch | Contents |
+> |---|---|
+> | `main` | upstream, plus Wolfgang Meier's comment-lexing fix |
+> | `fork/wolfgangmm` | [wolfgangmm](https://github.com/wolfgangmm/tree-sitter-xquery), merged into main |
+> | `fork/mrleepee` | [mrleepee](https://github.com/mrleepee/tree-sitter-xquery), unmerged, under review |
+>
+> `fork/mrleepee` adds `queries/tags.scm` and grammar review fixes that look worth
+> taking, plus MarkLogic JSON node constructors that probably do not belong in a
+> vendor-neutral grammar. Reviewed per commit, not merged wholesale.
+>
+> Planned here: an external scanner for direct element constructors, XQuery 4.0, and
+> the query files Zed needs.
+
 # A tree-sitter for XQuery
 
 A tree-sitter grammar is built for an as-you-type experience in a text editor.
