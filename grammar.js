@@ -14,26 +14,30 @@ module.exports = grammar({
   // Whitespace and Comments function as symbol separators
   extras: ($) => [$.comment, /[\s\p{Zs}\uFEFF\u2060\u200B]/],
   //https://www.w3.org/TR/xquery-31/#id-reserved-fn-names
-  reserved: ($) => [
-    'array',
-    'attribute',
-    'comment',
-    'document-node',
-    'element',
-    'empty-sequence',
-    'function',
-    'if',
-    'item',
-    'map',
-    'namespace-node',
-    'node',
-    'processing-instruction',
-    'schema-attribute',
-    'schema-element',
-    'switch',
-    'text',
-    'typeswitch',
-  ],
+  // Disabled: this was silently ignored by tree-sitter <0.25 and never reached
+  // src/grammar.json. tree-sitter >=0.25 requires an object and would apply these
+  // globally, which is wrong for XQuery: keywords are NOT reserved except in the
+  // unprefixed function-name position (spec A.3). Needs a scoped reserved set.
+  // reserved: ($) => [
+  // 'array',
+  // 'attribute',
+  // 'comment',
+  // 'document-node',
+  // 'element',
+  // 'empty-sequence',
+  // 'function',
+  // 'if',
+  // 'item',
+  // 'map',
+  // 'namespace-node',
+  // 'node',
+  // 'processing-instruction',
+  // 'schema-attribute',
+  // 'schema-element',
+  // 'switch',
+  // 'text',
+  // 'typeswitch',
+  // ],
   word: ($) => $.identifier,
   //conflicts: ($) => [],
   supertypes: ($) => [

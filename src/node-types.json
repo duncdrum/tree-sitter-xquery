@@ -2264,6 +2264,7 @@
   {
     "type": "comment",
     "named": true,
+    "extra": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -5407,7 +5408,7 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "_primary_expr",
@@ -6285,6 +6286,7 @@
   {
     "type": "module",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -12244,10 +12246,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "",
-    "named": false
   },
   {
     "type": "!",

@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Pin the CLI. `yarn upgrade` in the old workflow meant the toolchain was
+  # whatever npm served that day.
+  TREE_SITTER_VERSION: "0.27.0"
+  # examples/spec/*.xq that are known not to parse yet. Keep this list empty
+  # if you can; every entry needs an open issue.
+  #   string_constructors.xq -> issue #2
+  PARSE_EXCLUDE: "string_constructors.xq"
+
+jobs:
+  grammar:
+    name: generate and parse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install tree-sitter CLI
+        run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
+
+      - name: Generate parser
+        run: npx tree-sitter generate
+
+      - name: Parse every spec example
+        run: |
+          fail=0
+          for f in examples/spec/*.xq; do
+            case " $PARSE_EXCLUDE " in
+              *" $(basename "$f") "*)
+                echo "skip (known failure): $f"; continue ;;
+            esac
+            if ! npx tree-sitter parse -q "$f"; then
+              echo "::error file=$f::failed to parse"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: Check the excluded files are still failing
+        # If one starts passing, remove it from PARSE_EXCLUDE and close its issue.
+        run: |
+          for b in $PARSE_EXCLUDE; do
+            f="examples/spec/$b"
+            [ -f "$f" ] || continue
+            if npx tree-sitter parse -q "$f" >/dev/null 2>&1; then
+              echo "::warning file=$f::now parses, drop it from PARSE_EXCLUDE"
+            fi
+          done
+
+  corpus:
+    name: test corpus (non-blocking)
+    runs-on: ubuntu-latest
+    # The corpus is stale, not the grammar: 127 of 129 cases assert node names
+    # the grammar no longer emits. It has never run in CI, it was commented out.
+    # Tracked in issue #1. Make this blocking once that is resolved.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install tree-sitter CLI
+        run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
+      - name: Generate parser
+        run: npx tree-sitter generate
+      - name: Run corpus
+        run: npx tree-sitter test
+
+  bindings:
+    name: bindings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install tree-sitter CLI
+        run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
+      - name: Generate parser
+        run: npx tree-sitter generate
+      - name: Build the Rust binding
+        run: cargo build --locked --verbose || cargo build --verbose

@@ -1,0 +1,1 @@
+/private/tmp/tsx/target/debug/libtree_sitter_xquery.rlib: /private/tmp/tsx/bindings/rust/build.rs /private/tmp/tsx/bindings/rust/lib.rs /private/tmp/tsx/src/node-types.json /private/tmp/tsx/src/parser.c
