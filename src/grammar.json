@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "xquery",
   "word": "identifier",
   "rules": {
@@ -6879,6 +6880,6 @@
     "_item_type",
     "_common_content",
     "_numeric_literal"
-  ]
+  ],
+  "reserved": {}
 }
-
