@@ -1,0 +1,21 @@
+LICENSE
+  s_f370632a1ddbab::t_bd91bf6421798b 3-8
+README.md
+  s_f370632a1ddbab::t_2bf1caca2436ad 1-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e603a2a1db633362b83681629518b7eff21ada8c",
+  "prompts": {},
+  "sessions": {
+    "s_f370632a1ddbab": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c1253db4-16bf-49e8-ad5e-8b1b65ca0d7b",
+        "model": "claude-opus-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
