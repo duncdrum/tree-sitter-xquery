@@ -99,3 +99,7 @@ jobs:
         # parser and the tree-sitter crate: Parser::set_language() fails at
         # runtime, not at compile time. See issue #7.
         run: cargo run --example smoke --locked --verbose || cargo run --example smoke --verbose
+      - name: Build the Node binding
+        run: npm install
+      - name: Smoke test the Node binding
+        run: npm run test:node
