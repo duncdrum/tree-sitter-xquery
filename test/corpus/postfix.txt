@@ -1,4 +1,3 @@
-
 ==================
 3.2.1 Postfix Expressions - Filter Expressions
 ==================
@@ -7,13 +6,20 @@ $products[price gt 100]
 
 ---
 
-
-(module 
- (main_module 
-  (path_expr 
-   (var_ref (identifier)) 
-   (predicate 
-    (comparison_expr (path_expr (name_test (identifier))) (integer_literal))))))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (var_ref
+          (identifier))
+        (predicate
+          (comparison_expr
+            (rel_path_expr
+              (abbrev_forward_step
+                (name_test
+                  (identifier))))
+            (rel_path_expr
+              (integer_literal))))))))
 
 ==================
 3.2.2 Postfix Expressions - Dynamic Function Calls
@@ -23,8 +29,14 @@ $f(2, 3)
 
 ---
 
-(module 
- (main_module 
-  (function_call (var_ref (identifier)) 
-   (arg_list (integer_literal) (integer_literal))))) 
-
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (var_ref
+          (identifier))
+        (arg_list
+          (rel_path_expr
+            (integer_literal))
+          (rel_path_expr
+            (integer_literal)))))))

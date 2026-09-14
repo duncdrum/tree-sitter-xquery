@@ -57,7 +57,7 @@ module.exports = grammar({
   rules: {
     module: ($) => seq(optional($.version_declaration), choice($.main_module, $.library_module)), // 1
     version_declaration: ($) => seq('xquery', choice(seq('encoding', $.string_literal), seq('version', $.string_literal, optional(seq('encoding', $.string_literal)))), ';'), // 2
-    library_module: ($) => seq($.module_declaration, $.prolog), // 4
+    library_module: ($) => seq($.module_declaration, optional($.prolog)), // 4
     main_module: ($) => seq(optional($.prolog), $.query_body), // 3
     prolog: ($) => prec.right(choice(seq($._prolog_part_one, optional($._prolog_part_two)), seq(optional($._prolog_part_one), $._prolog_part_two))), // 6
     module_declaration: ($) => seq('module', $._namespace_define, field('uri', $.string_literal), ';'), // 5

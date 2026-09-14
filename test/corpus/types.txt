@@ -1,7 +1,5 @@
-SequenceType Syntax 
-
 ==================
-2.5.4 SequenceType Syntax 
+2.5.4 SequenceType Syntax
 ==================
 
 ( 
@@ -13,15 +11,28 @@ $N instance of item()*
 ---
 
 (module
- (main_module
-  (parenthesized_expr 
-   (instance_of_expr (var_ref (identifier)) 
-    (sequence_type (empty_sequence)))
-   (instance_of_expr (var_ref (identifier)) 
-    (sequence_type (any_item)))
-   (instance_of_expr (var_ref (identifier)) 
-    (sequence_type (any_item) (occurrence_indicator)))
-  )))
+  (main_module
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type))
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type
+              (any_item)))
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type
+              (any_item)
+              (occurrence_indicator))))))))
 
 ==================
 2.5.4 Kind Tests 'node', 'comment', 'namespace-node', 'text'
@@ -36,14 +47,35 @@ $N instance of text()
 
 ---
 
-(module 
- (main_module
-  (parenthesized_expr 
-   (instance_of_expr (var_ref (identifier)) (sequence_type (any_kind_test)))
-   (instance_of_expr (var_ref (identifier)) (sequence_type (comment_test)))
-   (instance_of_expr (var_ref (identifier)) (sequence_type (namespace_node_test)))
-   (instance_of_expr (var_ref (identifier)) (sequence_type (text_test)))
-  )))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type
+              (any_kind_test)))
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type
+              (comment_test)))
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type
+              (namespace_node_test)))
+          (instance_of_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (sequence_type
+              (text_test))))))))
 
 ==================
 2.5.5.3 Element Test
@@ -53,17 +85,19 @@ $N instance of element(person, xx ?)
 
 ---
 
-(module 
- (main_module
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (element_test  
-     (element_test_params
-      (identifier) 
-      (identifier) 
-      (occurrence_indicator)))
-   ))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (element_test
+            (element_test_params
+              (identifier)
+              (identifier)
+              (occurrence_indicator))))))))
 
 ==================
 2.5.5.4 Schema Element Test
@@ -73,30 +107,36 @@ $N instance of  schema-element(customer)
 
 ---
 
-(module 
- (main_module
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (schema_element_test 
-    (identifier))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (schema_element_test
+            (identifier)))))))
 
 ==================
-2.5.5.5 Attribute Test 
+2.5.5.5 Attribute Test
 ==================
 
 $N instance of attribute(price, currency)
 
 ---
 
-(module 
- (main_module
- (instance_of_expr 
-  (var_ref (identifier)) 
-  (sequence_type 
-   (attribute_test
-    (identifier) 
-    (identifier)))))) 
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (attribute_test
+            (identifier)
+            (identifier)))))))
 
 ==================
 2.5.5.6 Schema Attribute Test
@@ -106,13 +146,16 @@ $N instance of schema-attribute(colors)
 
 ---
 
-(module 
- (main_module
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (schema_attribute_test 
-     (identifier))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (schema_attribute_test
+            (identifier)))))))
 
 ==================
 2.5.5.7 Any Function Test
@@ -122,12 +165,16 @@ $N instance of function(*)
 
 ---
 
-(module 
- (main_module
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (any_function_test (wildcard))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (any_function_test
+            (wildcard)))))))
 
 ==================
 2.5.5.7 Any Function Test with annotation
@@ -137,14 +184,18 @@ $N instance of %assertion function(*)
 
 ---
 
-(module 
- (main_module
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (any_function_test 
-     (annotation (identifier))
-     (wildcard))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (any_function_test
+            (annotation
+              (identifier))
+            (wildcard)))))))
 
 ==================
 2.5.5.7 Typed Function Test
@@ -154,15 +205,25 @@ $F instance of function(int, int) as int
 
 ---
 
-(module 
- (main_module 
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (typed_function_test 
-     (sequence_type (atomic_or_union_type (identifier))) 
-     (sequence_type (atomic_or_union_type (identifier)))
-     (type_declaration (sequence_type (atomic_or_union_type (identifier)))))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (typed_function_test
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)))
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)))
+            (type_declaration
+              (sequence_type
+                (atomic_or_union_type
+                  (identifier))))))))))
 
 ==================
 2.5.5.7 Typed Function Test with annotation assertion
@@ -172,18 +233,27 @@ $F instance of %assertion function(int, int) as int
 
 ---
 
-(module 
- (main_module 
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (typed_function_test 
-     (annotation (identifier)) 
-     (sequence_type (atomic_or_union_type (identifier))) 
-     (sequence_type (atomic_or_union_type (identifier))) 
-     (type_declaration 
-      (sequence_type (atomic_or_union_type (identifier)))))
-   )))) 
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (typed_function_test
+            (annotation
+              (identifier))
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)))
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)))
+            (type_declaration
+              (sequence_type
+                (atomic_or_union_type
+                  (identifier))))))))))
 
 ==================
 2.5.5.7 Function Test with signature that matches any map, or any function
@@ -193,13 +263,23 @@ $F instance of function(xs:anyAtomicType) as item()*
 
 ---
 
-(module 
- (main_module 
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (typed_function_test (sequence_type (atomic_or_union_type (identifier) (identifier))) 
-     (type_declaration (sequence_type (any_item) (occurrence_indicator))))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (typed_function_test
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)
+                (identifier)))
+            (type_declaration
+              (sequence_type
+                (any_item)
+                (occurrence_indicator)))))))))
 
 ==================
 2.5.5.7 Function Test, signature matches any array, or any function
@@ -208,32 +288,45 @@ $F instance of function(xs:anyAtomicType) as item()*
 $F instance of function(xs:integer) as item()*
 
 ---
-(module 
- (main_module 
-  (instance_of_expr 
-   (var_ref (identifier)) 
-   (sequence_type 
-    (typed_function_test (sequence_type (atomic_or_union_type (identifier) (identifier))) 
-     (type_declaration (sequence_type (any_item) (occurrence_indicator))))))))
+
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (typed_function_test
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)
+                (identifier)))
+            (type_declaration
+              (sequence_type
+                (any_item)
+                (occurrence_indicator)))))))))
 
 ==================
-2.5.5.8 Any Map Test 
+2.5.5.8 Any Map Test
 ==================
 
 map {} instance of map(*)
 
 ---
 
-(module 
- (main_module 
-  (instance_of_expr 
-   (map_constructor) 
-   (sequence_type 
-    (any_map_test
-     (wildcard))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (map_constructor))
+        (sequence_type
+          (any_map_test
+            (wildcard)))))))
 
 ==================
-2.5.5.8 Typed Map Test 
+2.5.5.8 Typed Map Test
 ==================
 
 $M instance of map(xs:integer, xs:string)
@@ -241,12 +334,21 @@ $M instance of map(xs:integer, xs:string)
 ---
 
 (module
-(main_module 
- (instance_of_expr 
-  (var_ref (identifier)) 
-  (sequence_type 
-   (typed_map_test (atomic_or_union_type (identifier) (identifier)) 
-    (sequence_type (atomic_or_union_type (identifier) (identifier))))))))
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (sequence_type
+          (typed_map_test
+            (atomic_or_union_type
+              (identifier)
+              (identifier))
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)
+                (identifier)))))))))
 
 ==================
 2.5.5.9 Any Array Test
@@ -256,13 +358,15 @@ $M instance of map(xs:integer, xs:string)
 
 ---
 
-(module 
- (main_module 
-  (instance_of_expr 
-   (square_array_constructor) 
-   (sequence_type 
-    (any_array_test
-     (wildcard))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (square_array_constructor))
+        (sequence_type
+          (any_array_test
+            (wildcard)))))))
 
 ==================
 2.5.5.9 Typed Array Test square
@@ -272,13 +376,21 @@ $M instance of map(xs:integer, xs:string)
 
 ---
 
-(module 
- (main_module 
-  (instance_of_expr 
-   (square_array_constructor (string_literal)) 
-   (sequence_type 
-    (typed_array_test 
-     (sequence_type (atomic_or_union_type (identifier) (identifier))))))))
+(module
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (square_array_constructor
+            (rel_path_expr
+              (string_literal
+                (char_data)))))
+        (sequence_type
+          (typed_array_test
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)
+                (identifier)))))))))
 
 ==================
 2.5.5.9 Typed Array Test curly
@@ -289,12 +401,18 @@ array {"foo"} instance of array(xs:string)
 ---
 
 (module
- (main_module 
- (instance_of_expr
-  (curly_array_constructor  (enclosed_expr (string_literal)))
-  (sequence_type 
-   (typed_array_test 
-    (sequence_type 
-     (atomic_or_union_type 
-      (identifier) (identifier))))))))
-
+  (main_module
+    (query_body
+      (instance_of_expr
+        (rel_path_expr
+          (curly_array_constructor
+            (enclosed_expr
+              (rel_path_expr
+                (string_literal
+                  (char_data))))))
+        (sequence_type
+          (typed_array_test
+            (sequence_type
+              (atomic_or_union_type
+                (identifier)
+                (identifier)))))))))

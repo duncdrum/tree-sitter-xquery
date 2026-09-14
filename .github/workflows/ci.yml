@@ -73,12 +73,8 @@ jobs:
           done
 
   corpus:
-    name: test corpus (non-blocking)
+    name: test corpus
     runs-on: ubuntu-latest
-    # The corpus is stale, not the grammar: 127 of 129 cases assert node names
-    # the grammar no longer emits. It has never run in CI, it was commented out.
-    # Tracked in issue #1. Make this blocking once that is resolved.
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -89,7 +85,11 @@ jobs:
       - name: Generate parser
         run: npx tree-sitter generate
       - name: Run corpus
-        run: npx tree-sitter test
+        # Excludes the two cases in primary.txt that assert reserved
+        # function names are rejected - that needs the scoped reserved-word
+        # set tracked by issue #4, not implemented yet. See the comment
+        # above those cases in test/corpus/primary.txt.
+        run: npx tree-sitter test -e "reserved function name"
 
   bindings:
     name: bindings
