@@ -35,6 +35,18 @@ jobs:
       - name: Generate parser
         run: npx tree-sitter generate
 
+      - name: Validate query files compile against the grammar
+        # Catches invalid node/field names in queries/*.scm (typos, renamed
+        # nodes) as soon as they're introduced, rather than at first use in
+        # an editor. Exercises every query against the whole spec corpus so
+        # a query referencing a node type nothing in the corpus reaches is
+        # still checked for a *valid* type, even if never actually matched.
+        run: |
+          for q in queries/*.scm; do
+            echo "checking $q"
+            npx tree-sitter query -q "$q" examples/spec/*.xq > /dev/null
+          done
+
       - name: Parse every spec example
         run: |
           fail=0
