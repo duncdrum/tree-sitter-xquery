@@ -319,6 +319,46 @@ hyphen-function( $foo )
                 (identifier)))))))))
 
 ==================
+3.1.5 Static Function Call: reserved word as unprefixed function name is illegal (spec A.3)
+==================
+
+if(1)
+
+---
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (abbrev_forward_step
+          (name_test
+            (identifier
+              (identifier)))))))
+  (ERROR
+    (rel_path_expr
+      (integer_literal))))
+
+==================
+3.1.5 Static Function Call: reserved word is fine prefixed
+==================
+
+fn:if(1)
+
+---
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (function_call
+          (identifier)
+          (identifier
+            (identifier))
+          (arg_list
+            (rel_path_expr
+              (integer_literal))))))))
+
+==================
 3.1.6 Named Function References:
 ==================
 
@@ -452,15 +492,8 @@ function( $a as item()* ) as item()+  { () }
               (rel_path_expr
                 (parenthesized_expr)))))))))
 
-; The two cases below are intentionally left failing: they assert that
-; reserved function names are rejected as identifiers, which needs the
-; scoped reserved-word set tracked by issue #4 (currently unimplemented -
-; the grammar accepts these today). Do not "fix" by accepting the current
-; error-free output; that would erase #4's test coverage. Regenerate their
-; expected trees once #4 lands, including the query_body/rel_path_expr
-; wrapping used everywhere else in this file.
 ==================
-3.1.7 Inline Function: illegal var - uses reserved function name
+3.1.7 Inline Function: reserved word as parameter name is legal
 ==================
 
 let $getContent := function( $map as map(*) ) as map(*){()}
@@ -470,26 +503,34 @@ return ()
 
 (module
   (main_module
-    (flwor_expr
-      (let_clause
-        (let_binding
-          (var_ref
-            (identifier))
-          (inline_function_expr
-            (param_list
-              (ERROR
-                (identifier)))
-            (type_declaration
-              (sequence_type
-                (any_map_test
-                  (wildcard))))
-            (enclosed_expr
-              (parenthesized_expr)))))
-      (return_clause
-        (parenthesized_expr)))))
+    (query_body
+      (flwor_expr
+        (let_clause
+          (let_binding
+            (identifier)
+            (rel_path_expr
+              (function_item_expr
+                (inline_function_expr
+                  (param_list
+                    (identifier
+                      (identifier))
+                    (type_declaration
+                      (sequence_type
+                        (any_map_test
+                          (wildcard)))))
+                  (type_declaration
+                    (sequence_type
+                      (any_map_test
+                        (wildcard))))
+                  (enclosed_expr
+                    (rel_path_expr
+                      (parenthesized_expr))))))))
+        (return_clause
+          (rel_path_expr
+            (parenthesized_expr)))))))
 
 ==================
-3.1.7 Inline Function: illegal function name - uses reserved function name
+3.1.7 Inline Function: reserved word as let-bound variable name is legal
 ==================
 
 let $map := function(){}
@@ -498,10 +539,17 @@ return ()
 ---
 
 (module
-  (ERROR
-    (path_expr
-      (inline_function_expr
-        (param_list)
-        (enclosed_expr))))
   (main_module
-    (parenthesized_expr)))
+    (query_body
+      (flwor_expr
+        (let_clause
+          (let_binding
+            (identifier
+              (identifier))
+            (rel_path_expr
+              (function_item_expr
+                (inline_function_expr
+                  (enclosed_expr))))))
+        (return_clause
+          (rel_path_expr
+            (parenthesized_expr)))))))

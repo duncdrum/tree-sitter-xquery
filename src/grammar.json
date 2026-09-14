@@ -4746,7 +4746,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_EQName"
+          "name": "_function_name"
         },
         {
           "type": "SYMBOL",
@@ -6266,6 +6266,55 @@
         }
       ]
     },
+    "_function_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "ncname",
+          "content": {
+            "type": "RESERVED",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_ncname"
+            },
+            "context_name": "function_name"
+          }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "prefixed",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_ncname"
+              }
+            },
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": ":"
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "local",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_ncname"
+              }
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "uri_qualified_name"
+        }
+      ]
+    },
     "_allowed_qnames": {
       "type": "CHOICE",
       "members": [
@@ -6989,5 +7038,81 @@
     "_common_content",
     "_numeric_literal"
   ],
-  "reserved": {}
+  "reserved": {
+    "global": [],
+    "function_name": [
+      {
+        "type": "STRING",
+        "value": "array"
+      },
+      {
+        "type": "STRING",
+        "value": "attribute"
+      },
+      {
+        "type": "STRING",
+        "value": "comment"
+      },
+      {
+        "type": "STRING",
+        "value": "document-node"
+      },
+      {
+        "type": "STRING",
+        "value": "element"
+      },
+      {
+        "type": "STRING",
+        "value": "empty-sequence"
+      },
+      {
+        "type": "STRING",
+        "value": "function"
+      },
+      {
+        "type": "STRING",
+        "value": "if"
+      },
+      {
+        "type": "STRING",
+        "value": "item"
+      },
+      {
+        "type": "STRING",
+        "value": "map"
+      },
+      {
+        "type": "STRING",
+        "value": "namespace-node"
+      },
+      {
+        "type": "STRING",
+        "value": "node"
+      },
+      {
+        "type": "STRING",
+        "value": "processing-instruction"
+      },
+      {
+        "type": "STRING",
+        "value": "schema-attribute"
+      },
+      {
+        "type": "STRING",
+        "value": "schema-element"
+      },
+      {
+        "type": "STRING",
+        "value": "switch"
+      },
+      {
+        "type": "STRING",
+        "value": "text"
+      },
+      {
+        "type": "STRING",
+        "value": "typeswitch"
+      }
+    ]
+  }
 }
