@@ -34,10 +34,12 @@
 ;3.1.4 Context Item Expression
 (context_item_expr) @operator.context
 ;3.1.5 Static Function Calls
-; A.3 Reserved Function Names
+; A.3 Reserved Function Names are enforced by grammar.js's scoped `reserved`
+; property (see #4) - function_call's ncname field can never be one of those
+; words, so no highlighting-side filter is needed here.
 (function_call .
   [
-  ncname: (identifier) @function.call (#not-any-of? @function.call  "array" "attribute" "comment" "document-node" "element" "empty-sequence" "function" "if" "item" "map" "namespace-node" "node" "processing-instruction" "schema-attribute" "schema-element" "switch" "text" "typeswitch")
+  ncname: (identifier) @function.call
   prefixed: (identifier)
   (uri_qualified_name) @function.call.URIQualifiedName
   ]
