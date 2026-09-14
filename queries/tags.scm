@@ -72,6 +72,20 @@
 @definition.namespace
 
 ; ---------------------------------------------------------------------------
+; Namespace declarations
+;
+; declare namespace prefix = "uri";
+;
+; Same "namespace" . (identifier) shape as module imports above - a plain
+; declare namespace binds a prefix just as much as an import does.
+; ---------------------------------------------------------------------------
+(namespace_declaration
+  "namespace"
+  .
+  (identifier) @name)
+@definition.namespace
+
+; ---------------------------------------------------------------------------
 ; Function call references
 ;
 ; prefix:localname(args) — capture the local name only
@@ -81,5 +95,19 @@
 @reference.call
 
 (function_call
+  ncname: (identifier) @name)
+@reference.call
+
+; ---------------------------------------------------------------------------
+; Arrow-syntax call references
+;
+; E => prefix:localname(args) — same ncname/prefixed/local field split as
+; function_call, since both go through _EQName for a static callee.
+; ---------------------------------------------------------------------------
+(arrow_function
+  local: (identifier) @name)
+@reference.call
+
+(arrow_function
   ncname: (identifier) @name)
 @reference.call
