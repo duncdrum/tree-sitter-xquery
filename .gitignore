@@ -8,3 +8,7 @@ temp
 tmp
 .git
 package-lock.json
+.DS_Store
+.claude/
+.moderne/
+.zed/
