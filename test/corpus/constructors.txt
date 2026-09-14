@@ -297,13 +297,20 @@ element book {
 
 (module
   (main_module
-    (comp_elem_constructor
-      (identifier)
-      (enclosed_expr
+    (query_body
+      (rel_path_expr
         (comp_elem_constructor
-          (string_literal)
+          (identifier)
           (enclosed_expr
-            (string_literal)))))))
+            (rel_path_expr
+              (comp_elem_constructor
+                (rel_path_expr
+                  (string_literal
+                    (char_data)))
+                (enclosed_expr
+                  (rel_path_expr
+                    (string_literal
+                      (char_data))))))))))))
 
 ==================
 3.9.3.2 Computed Attribute Constructors
@@ -315,12 +322,16 @@ attribute size {4 + 3}
 
 (module
   (main_module
-    (comp_attr_constructor
-      (identifier)
-      (enclosed_expr
-        (additive_expr
-          (integer_literal)
-          (integer_literal))))))
+    (query_body
+      (rel_path_expr
+        (comp_attr_constructor
+          (identifier)
+          (enclosed_expr
+            (additive_expr
+              (rel_path_expr
+                (integer_literal))
+              (rel_path_expr
+                (integer_literal)))))))))
 
 ==================
 3.9.3.3 Document Node Constructors
@@ -332,8 +343,10 @@ document {  }
 
 (module
   (main_module
-    (comp_doc_constructor
-      (enclosed_expr))))
+    (query_body
+      (rel_path_expr
+        (comp_doc_constructor
+          (enclosed_expr))))))
 
 ==================
 3.9.3.4 Text Node Constructors
@@ -345,9 +358,13 @@ text { 'hello' }
 
 (module
   (main_module
-    (comp_text_constructor
-      (enclosed_expr
-        (string_literal)))))
+    (query_body
+      (rel_path_expr
+        (comp_text_constructor
+          (enclosed_expr
+            (rel_path_expr
+              (string_literal
+                (char_data)))))))))
 
 ==================
 3.9.3.6 Computed Comment Constructors
@@ -359,8 +376,10 @@ comment { }
 
 (module
   (main_module
-    (comp_comment_constructor
-      (enclosed_expr))))
+    (query_body
+      (rel_path_expr
+        (comp_comment_constructor
+          (enclosed_expr))))))
 
 ==================
 3.10 String Constructor with interpolation and trailing text
@@ -466,13 +485,23 @@ map {
 
 (module
   (main_module
-    (map_constructor
-      (map_entry
-        (string_literal)
-        (string_literal))
-      (map_entry
-        (string_literal)
-        (string_literal)))))
+    (query_body
+      (rel_path_expr
+        (map_constructor
+          (map_entry
+            (rel_path_expr
+              (string_literal
+                (char_data)))
+            (rel_path_expr
+              (string_literal
+                (char_data))))
+          (map_entry
+            (rel_path_expr
+              (string_literal
+                (char_data)))
+            (rel_path_expr
+              (string_literal
+                (char_data)))))))))
 
 ==================
 3.11.2.1 Curly Array Constructor
@@ -484,10 +513,16 @@ array { 'one', 'two' }
 
 (module
   (main_module
-    (curly_array_constructor
-      (enclosed_expr
-        (string_literal)
-        (string_literal)))))
+    (query_body
+      (rel_path_expr
+        (curly_array_constructor
+          (enclosed_expr
+            (rel_path_expr
+              (string_literal
+                (char_data)))
+            (rel_path_expr
+              (string_literal
+                (char_data)))))))))
 
 ==================
 3.11.2.1 Square Array Constructor
@@ -499,9 +534,15 @@ array { 'one', 'two' }
 
 (module
   (main_module
-    (square_array_constructor
-      (string_literal)
-      (string_literal))))
+    (query_body
+      (rel_path_expr
+        (square_array_constructor
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))))))
 
 ==================
 3.11.2.2 TODO! should resolve to Function call - Array Lookup using Function Call Syntax
@@ -513,12 +554,18 @@ array { 'one', 'two' }
 
 (module
   (main_module
-    (path_expr
-      (square_array_constructor
-        (string_literal)
-        (string_literal))
-      (arg_list
-        (integer_literal)))))
+    (query_body
+      (rel_path_expr
+        (square_array_constructor
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))
+        (arg_list
+          (rel_path_expr
+            (integer_literal)))))))
 
 ==================
 3.11.3.1 TODO! Unary Lookup with predicate
@@ -530,15 +577,18 @@ $mp[?name='Mike']
 
 (module
   (main_module
-    (path_expr
-      (var_ref
-        (identifier))
-      (predicate
-        (comparison_expr
-          (unary_lookup
-            (NCName
-              (identifier)))
-          (string_literal))))))
+    (query_body
+      (rel_path_expr
+        (var_ref
+          (identifier))
+        (predicate
+          (comparison_expr
+            (rel_path_expr
+              (unary_lookup
+                (identifier)))
+            (rel_path_expr
+              (string_literal
+                (char_data)))))))))
 
 ==================
 3.11.3.1 Unary Lookup with bang
@@ -550,14 +600,18 @@ $mp[?name='Mike']
 
 (module
   (main_module
-    (bang_expr
-      (var_ref
-        (identifier))
-      (comparison_expr
-        (unary_lookup
-          (NCName
+    (query_body
+      (bang_expr
+        (rel_path_expr
+          (var_ref
             (identifier)))
-        (string_literal)))))
+        (comparison_expr
+          (rel_path_expr
+            (unary_lookup
+              (identifier)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))))))
 
 ==================
 3.11.3.2 Postfix Lookup with array unary lookup: TODO? should be postfix_expr
@@ -569,9 +623,14 @@ $mp[?name='Mike']
 
 (module
   (main_module
-    (path_expr
-      (square_array_constructor
-        (string_literal)
-        (string_literal))
-      (postfix_lookup
-        (lookup_digit)))))
+    (query_body
+      (rel_path_expr
+        (square_array_constructor
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))
+        (postfix_lookup
+          (integer_literal))))))
