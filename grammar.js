@@ -13,31 +13,36 @@ module.exports = grammar({
   name: 'xquery',
   // Whitespace and Comments function as symbol separators
   extras: ($) => [$.comment, /[\s\p{Zs}\uFEFF\u2060\u200B]/],
-  //https://www.w3.org/TR/xquery-31/#id-reserved-fn-names
-  // Disabled: this was silently ignored by tree-sitter <0.25 and never reached
-  // src/grammar.json. tree-sitter >=0.25 requires an object and would apply these
-  // globally, which is wrong for XQuery: keywords are NOT reserved except in the
-  // unprefixed function-name position (spec A.3). Needs a scoped reserved set.
-  // reserved: ($) => [
-  // 'array',
-  // 'attribute',
-  // 'comment',
-  // 'document-node',
-  // 'element',
-  // 'empty-sequence',
-  // 'function',
-  // 'if',
-  // 'item',
-  // 'map',
-  // 'namespace-node',
-  // 'node',
-  // 'processing-instruction',
-  // 'schema-attribute',
-  // 'schema-element',
-  // 'switch',
-  // 'text',
-  // 'typeswitch',
-  // ],
+  // https://www.w3.org/TR/xquery-31/#id-reserved-fn-names
+  // Scoped, not global: XQuery keywords are NOT reserved except when used as
+  // an unprefixed function name directly followed by '(' (spec A.3) - fn:if(),
+  // a variable $if, or an element named <if> are all fine. `global` is the
+  // wordset applied everywhere by default (empty: nothing reserved anywhere),
+  // overridden by `function_name` only at the one position that needs it, via
+  // reserved('function_name', ...) on _function_name below.
+  reserved: {
+    global: ($) => [],
+    function_name: ($) => [
+      'array',
+      'attribute',
+      'comment',
+      'document-node',
+      'element',
+      'empty-sequence',
+      'function',
+      'if',
+      'item',
+      'map',
+      'namespace-node',
+      'node',
+      'processing-instruction',
+      'schema-attribute',
+      'schema-element',
+      'switch',
+      'text',
+      'typeswitch',
+    ],
+  },
   word: ($) => $.identifier,
   //conflicts: ($) => [],
   externals: ($) => [$._string_constructor_chars_text, $._pi_content_text, $._direct_comment_text],
@@ -356,7 +361,7 @@ module.exports = grammar({
     var_ref: ($) => seq('$', $._var_name), // 131
     parenthesized_expr: ($) => seq('(', optional($._expr), ')'), // 133
     context_item_expr: ($) => '.',
-    function_call: ($) => seq($._EQName, $.arg_list), // grammar-note: parens  lookahead comment pragma
+    function_call: ($) => seq($._function_name, $.arg_list), // grammar-note: parens  lookahead comment pragma
     arg_list: ($) => seq('(', optional(seq($._argument, repeat(seq(',', $._argument)))), ')'), // 122
     _argument: ($) => field('arg', choice($._expr_single, $.placeholder)),
     placeholder: ($) => '?',
@@ -446,6 +451,16 @@ module.exports = grammar({
     variable: ($) => seq('$', $._var_name),
     _var_name: ($) => $._EQName,
     _EQName: ($) => choice($._allowed_qnames, $.uri_qualified_name),
+    // Same shape as _EQName, but the unprefixed case is reserved-scoped
+    // (spec A.3) - only used by function_call, the one position where the
+    // 18 reserved words can't be used unprefixed. fn:if() and $Q{...}if()
+    // are still fine since only the bare ncname branch is restricted.
+    _function_name: ($) =>
+      choice(
+        field('ncname', reserved('function_name', $._ncname)),
+        seq(field('prefixed', $._ncname), token.immediate(':'), field('local', $._ncname)),
+        $.uri_qualified_name
+      ),
     //_QName: ($) => choice(field('unprefixed', $.identifier), seq(field('prefix', $.identifier), token.immediate(':'), field('local', $.identifier))),
     //_allowed_qnames: $  => prec.right(seq( $._ncname, optional(seq(':', $._ncname)))),
     _allowed_qnames: ($) => choice(field('ncname', $._ncname), seq(field('prefixed', $._ncname), token.immediate(':'), field('local', $._ncname))),

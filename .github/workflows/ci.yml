@@ -85,11 +85,7 @@ jobs:
       - name: Generate parser
         run: npx tree-sitter generate
       - name: Run corpus
-        # Excludes the two cases in primary.txt that assert reserved
-        # function names are rejected - that needs the scoped reserved-word
-        # set tracked by issue #4, not implemented yet. See the comment
-        # above those cases in test/corpus/primary.txt.
-        run: npx tree-sitter test -e "reserved function name"
+        run: npx tree-sitter test
 
   bindings:
     name: bindings
