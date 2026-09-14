@@ -7,7 +7,8 @@
       "scope": "source.xquery",
       "path": ".",
       "file-types": ["xquery", "xqm", "xq", "xql"],
-      "highlights": "queries/highlights.scm"
+      "highlights": "queries/highlights.scm",
+      "tags": "queries/tags.scm"
     }
   ],
   "metadata": {
