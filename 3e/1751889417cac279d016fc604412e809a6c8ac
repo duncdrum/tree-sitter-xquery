@@ -1,0 +1,21 @@
+.github/workflows/ci.yml
+  s_a20d1be3bdb77c::t_0fc4f524c422c9 113-118
+bindings/rust/lib.rs
+  s_a20d1be3bdb77c::t_d49ba9d2e4b041 49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "3e1751889417cac279d016fc604412e809a6c8ac",
+  "prompts": {},
+  "sessions": {
+    "s_a20d1be3bdb77c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a9884b31-2b04-4c69-ad94-d1032cb9b8be",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
