@@ -6,10 +6,18 @@
 
 ---
 
-(module 
- (main_module 
-  (parenthesized_expr (integer_literal) 
-  (range_expr (integer_literal) (integer_literal)))))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr
+          (rel_path_expr
+            (integer_literal))
+          (range_expr
+            (rel_path_expr
+              (integer_literal))
+            (rel_path_expr
+              (integer_literal))))))))
 
 ==================
 3.5 Arithmetic Expressions
@@ -19,12 +27,14 @@
 
 ---
 
-(module 
- (main_module 
-  (multiplicative_expr 
-   (integer_literal) 
-   (integer_literal))))
-
+(module
+  (main_module
+    (query_body
+      (multiplicative_expr
+        (rel_path_expr
+          (integer_literal))
+        (rel_path_expr
+          (integer_literal))))))
 
 ==================
 3.6 String Concatenation Expressions
@@ -34,11 +44,20 @@
 
 ---
 
-(module 
- (main_module 
-  (string_concat_expr (string_literal) 
-   (string_concat_expr (string_literal) (string_literal)))))
-
+(module
+  (main_module
+    (query_body
+      (string_concat_expr
+        (rel_path_expr
+          (string_literal
+            (char_data)))
+        (string_concat_expr
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))))))
 
 ==================
 3.7 Comparison Expressions
@@ -49,8 +68,13 @@
 ---
 
 (module
- (main_module 
-  (comparison_expr (integer_literal) (integer_literal))))
+  (main_module
+    (query_body
+      (comparison_expr
+        (rel_path_expr
+          (integer_literal))
+        (rel_path_expr
+          (integer_literal))))))
 
 ==================
 3.8 Logical Expressions
@@ -60,39 +84,53 @@
 
 ---
 
-(module 
- (main_module 
-  (and_expr 
-  (comparison_expr (integer_literal) (integer_literal))
-  (comparison_expr (integer_literal) (integer_literal)))))
+(module
+  (main_module
+    (query_body
+      (and_expr
+        (comparison_expr
+          (rel_path_expr
+            (integer_literal))
+          (rel_path_expr
+            (integer_literal)))
+        (comparison_expr
+          (rel_path_expr
+            (integer_literal))
+          (rel_path_expr
+            (integer_literal)))))))
 
 ==================
-3.13 Unordered Expression 
+3.13 Unordered Expression
 ==================
 
 unordered { }
 
 ---
 
-(module 
- (main_module 
-  (unordered_expr (enclosed_expr))))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (unordered_expr
+          (enclosed_expr))))))
 
 ==================
-3.13 Ordered Expression 
+3.13 Ordered Expression
 ==================
 
 ordered { }
 
 ---
 
-(module 
- (main_module 
- (ordered_expr (enclosed_expr))))
-
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (ordered_expr
+          (enclosed_expr))))))
 
 ==================
-3.14 Conditional Expressions 
+3.14 Conditional Expressions
 ==================
 
 if ( 'text' )
@@ -101,9 +139,19 @@ if ( 'text' )
 
 ---
 
-(module 
- (main_module 
-  (if_expr (string_literal) (string_literal) (string_literal))))
+(module
+  (main_module
+    (query_body
+      (if_expr
+        (rel_path_expr
+          (string_literal
+            (char_data)))
+        (rel_path_expr
+          (string_literal
+            (char_data)))
+        (rel_path_expr
+          (string_literal
+            (char_data)))))))
 
 ==================
 3.14 Conditional:  main module with multiple if else
@@ -115,10 +163,26 @@ else 'pigs fly'
 
 ---
 
-(module 
- (main_module 
-  (if_expr (string_literal) (string_literal) 
-   (if_expr (string_literal) (string_literal) (string_literal)))))
+(module
+  (main_module
+    (query_body
+      (if_expr
+        (rel_path_expr
+          (string_literal
+            (char_data)))
+        (rel_path_expr
+          (string_literal
+            (char_data)))
+        (if_expr
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))))))
 
 ==================
 3.15 Switch: main module with switch expr
@@ -132,13 +196,37 @@ switch ( $animal )
 
 ---
 
-(module 
- (main_module 
-  (switch_expr (var_ref (identifier)) 
-   (switch_clause (string_literal) (string_literal)) 
-   (switch_clause (string_literal) (string_literal)) 
-   (switch_clause (string_literal) (string_literal)) 
-   (string_literal))))
+(module
+  (main_module
+    (query_body
+      (switch_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (switch_clause
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))
+        (switch_clause
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))
+        (switch_clause
+          (rel_path_expr
+            (string_literal
+              (char_data)))
+          (rel_path_expr
+            (string_literal
+              (char_data))))
+        (rel_path_expr
+          (string_literal
+            (char_data)))))))
 
 ==================
 3.16 Quantified Expressions
@@ -148,11 +236,18 @@ some $foo in $baa satisfies $boo
 
 ---
 
-(module 
- (main_module 
-  (quantified_expr (var_ref (identifier)) 
-   (var_ref (identifier)) 
-   (var_ref (identifier)))))
+(module
+  (main_module
+    (query_body
+      (quantified_expr
+        (variable
+          (identifier))
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (rel_path_expr
+          (var_ref
+            (identifier)))))))
 
 ==================
 3.17 Try/Catch Expressions
@@ -165,11 +260,17 @@ catch * {
 
 ---
 
-(module 
-(main_module 
-(try_catch_expr 
-(try_clause (enclosed_expr)) 
-(catch_clause (catch_error_list (name_test (wildcard))) (enclosed_expr)))))
+(module
+  (main_module
+    (query_body
+      (try_catch_expr
+        (try_clause
+          (enclosed_expr))
+        (catch_clause
+          (catch_error_list
+            (name_test
+              (wildcard)))
+          (enclosed_expr))))))
 
 ==================
 3.19 Simple map operator
@@ -180,23 +281,32 @@ $emp ! ( $bang )
 ---
 
 (module
-(main_module
- (bang_expr 
-  (var_ref (identifier)) 
-  (parenthesized_expr (var_ref (identifier)))
- )))
+  (main_module
+    (query_body
+      (bang_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (rel_path_expr
+          (parenthesized_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))))))))
 
 ==================
-3.20 Arrow operator 
+3.20 Arrow operator
 ==================
 
 $string => upper-case()
 -------------------
 
-(module 
- (main_module 
-  (arrow_expr 
-   (var_ref (identifier)) 
-   (arrow_function (identifier) (arg_list))))) 
-
-
+(module
+  (main_module
+    (query_body
+      (arrow_expr
+        (rel_path_expr
+          (var_ref
+            (identifier)))
+        (arrow_function
+          (identifier)
+          (arg_list))))))
