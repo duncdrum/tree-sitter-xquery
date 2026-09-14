@@ -110,6 +110,12 @@ jobs:
         # parser and the tree-sitter crate: Parser::set_language() fails at
         # runtime, not at compile time. See issue #7.
         run: cargo run --example smoke --locked --verbose || cargo run --example smoke --verbose
+      - name: Test the Rust binding
+        # cargo build/run --example don't compile #[cfg(test)] code or
+        # doctests, so a mismatched set_language() call in lib.rs's own
+        # test module or doc comment went uncaught until rust-analyzer
+        # flagged it out-of-band.
+        run: cargo test --locked --verbose || cargo test --verbose
       - name: Build the Node binding
         run: npm install
       - name: Smoke test the Node binding
