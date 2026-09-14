@@ -317,7 +317,7 @@ module.exports = grammar({
         )
       ),
     direct_constructor: ($) => choice($.direct_element, $.direct_comment, $.direct_pi), //141
-    direct_comment: ($) => seq('<!--', optional($._direct_comment_text), '-->'), // 149
+    direct_comment: ($) => seq('<!--', optional(field('content', alias($._direct_comment_text, $.comment_content))), '-->'), // 149
     direct_pi: ($) => seq('<?', field('target', alias($._ncname, $.identifier)), optional(seq(/\s+/, field('content', alias($._pi_content_text, $.pi_content)))), '?>'), // 150
     direct_element: ($) => choice(seq($.start_tag, repeat($._direct_element_content), $.end_tag), $.empty_tag),
     _direct_element_content: ($) => choice($.direct_constructor, $._common_content, $._element_content_char),

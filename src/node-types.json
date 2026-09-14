@@ -3759,7 +3759,18 @@
   {
     "type": "direct_comment",
     "named": true,
-    "fields": {}
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "comment_content",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "direct_constructor",
@@ -12548,6 +12559,10 @@
   {
     "type": "comment",
     "named": false
+  },
+  {
+    "type": "comment_content",
+    "named": true
   },
   {
     "type": "construction",

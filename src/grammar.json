@@ -4072,8 +4072,17 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_direct_comment_text"
+              "type": "FIELD",
+              "name": "content",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_direct_comment_text"
+                },
+                "named": true,
+                "value": "comment_content"
+              }
             },
             {
               "type": "BLANK"

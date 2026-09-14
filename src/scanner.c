@@ -1,5 +1,6 @@
 #include "tree_sitter/parser.h"
 #include <stdbool.h>
+#include <stddef.h>
 
 // Terminator-boundary scanning for the three places grammar.js could not
 // reliably express "text up to but not including a multi-character
@@ -21,102 +22,78 @@ void tree_sitter_xquery_external_scanner_destroy(void *payload) {}
 unsigned tree_sitter_xquery_external_scanner_serialize(void *payload, char *buffer) { return 0; }
 void tree_sitter_xquery_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}
 
-// Consume characters as content, but only commit them (via mark_end) once
-// we've confirmed they're not the start of the terminator. On seeing the
-// terminator's first character we speculatively advance to check the rest;
-// if it doesn't complete the terminator, mark_end catches up to include the
-// speculative characters as content too. If it does, mark_end is left at
-// the last confirmed position, so those characters are excluded and the
-// terminator itself is left for the grammar's literal token to match.
-
-// Scans string_constructor_chars: stops before "`{" (interpolation start)
-// or "]``" (constructor end).
-static bool scan_string_constructor_chars(TSLexer *lexer) {
+// Consumes characters as content up to (not including) the first
+// occurrence of any terminator in `terminators` (a NULL-terminated array of
+// 2-or-3-character NUL-terminated strings, one per lead character -- no two
+// terminators here share a lead character, so matching on the lead alone is
+// unambiguous).
+//
+// Characters are only committed (via mark_end) once confirmed not to be the
+// start of a terminator: on seeing a terminator's lead character we
+// speculatively advance to check the rest. If it doesn't complete the
+// terminator, mark_end catches up to include the speculative characters as
+// content too. If it does, mark_end is left at the last confirmed position,
+// so those characters are excluded and the terminator itself is left for
+// the grammar's literal token to match.
+static bool scan_until(TSLexer *lexer, const char *const *terminators, enum TokenType token) {
   bool has_content = false;
   for (;;) {
     if (lexer->lookahead == 0) break;
-    if (lexer->lookahead == '`') {
-      lexer->advance(lexer, false);
-      if (lexer->lookahead == '{') break; // genuine "`{" ahead, stop before it
-      has_content = true;
-      lexer->mark_end(lexer);
-      continue;
-    }
-    if (lexer->lookahead == ']') {
-      lexer->advance(lexer, false);
-      if (lexer->lookahead == '`') {
-        lexer->advance(lexer, false);
-        if (lexer->lookahead == '`') break; // genuine "]``" ahead, stop before it
-        has_content = true;
-        lexer->mark_end(lexer);
-        continue;
+
+    const char *term = NULL;
+    for (int i = 0; terminators[i]; i++) {
+      if (lexer->lookahead == (int32_t)(unsigned char)terminators[i][0]) {
+        term = terminators[i];
+        break;
       }
+    }
+
+    if (term == NULL) {
+      lexer->advance(lexer, false);
       has_content = true;
       lexer->mark_end(lexer);
       continue;
     }
-    lexer->advance(lexer, false);
+
+    lexer->advance(lexer, false); // past term[0], speculatively
+    size_t i = 1;
+    while (term[i] != '\0' && lexer->lookahead == (int32_t)(unsigned char)term[i]) {
+      lexer->advance(lexer, false);
+      i++;
+    }
+    if (term[i] == '\0') break; // full terminator matched, stop before it
+
     has_content = true;
     lexer->mark_end(lexer);
   }
   if (!has_content) return false;
-  lexer->result_symbol = STRING_CONSTRUCTOR_CHARS;
+  lexer->result_symbol = token;
   return true;
 }
 
-// Scans direct PI content: stops before "?>".
-static bool scan_pi_content(TSLexer *lexer) {
-  bool has_content = false;
-  for (;;) {
-    if (lexer->lookahead == 0) break;
-    if (lexer->lookahead == '?') {
-      lexer->advance(lexer, false);
-      if (lexer->lookahead == '>') break; // genuine "?>" ahead, stop before it
-      has_content = true;
-      lexer->mark_end(lexer);
-      continue;
-    }
-    lexer->advance(lexer, false);
-    has_content = true;
-    lexer->mark_end(lexer);
-  }
-  if (!has_content) return false;
-  lexer->result_symbol = PI_CONTENT;
-  return true;
-}
+// string_constructor_chars stops before "`{" (interpolation start) or "]``"
+// (constructor end).
+static const char *const STRING_CONSTRUCTOR_TERMINATORS[] = {"`{", "]``", NULL};
 
-// Scans direct XML comment content: stops before "-->". Fixes the
-// pre-existing bug where a lone "-" (e.g. "a-b") produced an ERROR because
-// the old regex's alternatives all required a non-"-" first character.
-static bool scan_direct_comment_content(TSLexer *lexer) {
-  bool has_content = false;
-  for (;;) {
-    if (lexer->lookahead == 0) break;
-    if (lexer->lookahead == '-') {
-      lexer->advance(lexer, false);
-      if (lexer->lookahead == '-') {
-        lexer->advance(lexer, false);
-        if (lexer->lookahead == '>') break; // genuine "-->" ahead, stop before it
-        has_content = true;
-        lexer->mark_end(lexer);
-        continue;
-      }
-      has_content = true;
-      lexer->mark_end(lexer);
-      continue;
-    }
-    lexer->advance(lexer, false);
-    has_content = true;
-    lexer->mark_end(lexer);
-  }
-  if (!has_content) return false;
-  lexer->result_symbol = DIRECT_COMMENT_CONTENT;
-  return true;
-}
+// PI content stops before "?>".
+static const char *const PI_TERMINATORS[] = {"?>", NULL};
+
+// Direct XML comment content stops before "-->". This fixes a pre-existing
+// bug where a lone "-" (e.g. "a-b") produced an ERROR, because the old
+// regex's alternatives all required a non-"-" first character.
+static const char *const DIRECT_COMMENT_TERMINATORS[] = {"-->", NULL};
 
 bool tree_sitter_xquery_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
-  if (valid_symbols[STRING_CONSTRUCTOR_CHARS] && scan_string_constructor_chars(lexer)) return true;
-  if (valid_symbols[PI_CONTENT] && scan_pi_content(lexer)) return true;
-  if (valid_symbols[DIRECT_COMMENT_CONTENT] && scan_direct_comment_content(lexer)) return true;
+  if (valid_symbols[STRING_CONSTRUCTOR_CHARS] &&
+      scan_until(lexer, STRING_CONSTRUCTOR_TERMINATORS, STRING_CONSTRUCTOR_CHARS)) {
+    return true;
+  }
+  if (valid_symbols[PI_CONTENT] && scan_until(lexer, PI_TERMINATORS, PI_CONTENT)) {
+    return true;
+  }
+  if (valid_symbols[DIRECT_COMMENT_CONTENT] &&
+      scan_until(lexer, DIRECT_COMMENT_TERMINATORS, DIRECT_COMMENT_CONTENT)) {
+    return true;
+  }
   return false;
 }

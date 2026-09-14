@@ -6,7 +6,7 @@
 //! ```
 //! let code = "";
 //! let mut parser = tree_sitter::Parser::new();
-//! parser.set_language(tree_sitter_xquery::language()).expect("Error loading xquery grammar");
+//! parser.set_language(&tree_sitter_xquery::language()).expect("Error loading xquery grammar");
 //! let tree = parser.parse(code, None).unwrap();
 //! ```
 //!

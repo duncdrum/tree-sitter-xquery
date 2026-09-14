@@ -668,7 +668,7 @@ static const char * const ts_symbol_names[] = {
   [anon_sym_COLON_RPAREN] = ":)",
   [sym__string_constructor_chars_text] = "_string_constructor_chars_text",
   [sym__pi_content_text] = "pi_content",
-  [sym__direct_comment_text] = "_direct_comment_text",
+  [sym__direct_comment_text] = "comment_content",
   [sym_module] = "module",
   [sym_version_declaration] = "version_declaration",
   [sym_library_module] = "library_module",
@@ -2172,7 +2172,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .named = true,
   },
   [sym__direct_comment_text] = {
-    .visible = false,
+    .visible = true,
     .named = true,
   },
   [sym_module] = {
@@ -265540,8 +265540,8 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [1587] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_element_test, 4, 0, 0),
   [1589] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_empty_tag, 3, 0, 15),
   [1591] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_empty_tag, 3, 0, 15),
-  [1593] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_direct_comment, 3, 0, 0),
-  [1595] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_direct_comment, 3, 0, 0),
+  [1593] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_direct_comment, 3, 0, 19),
+  [1595] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_direct_comment, 3, 0, 19),
   [1597] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_direct_pi, 3, 0, 42),
   [1599] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_direct_pi, 3, 0, 42),
   [1601] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_for_binding, 6, 0, 123),

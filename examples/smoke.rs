@@ -14,4 +14,13 @@ fn main() {
         .expect("failed to parse string constructor");
     assert!(!scanner_tree.root_node().has_error(), "scanner case has ERROR/MISSING nodes");
     println!("ok: {}", scanner_tree.root_node().to_sexp());
+
+    // The corpus test for this (test/corpus/constructors.txt) runs in a
+    // non-blocking CI job, so assert it here too: a lone "-" in a direct
+    // comment used to produce ERROR (see #3).
+    let comment_tree = parser
+        .parse("<a><!-- a-b --></a>", None)
+        .expect("failed to parse direct comment");
+    assert!(!comment_tree.root_node().has_error(), "lone-dash comment has ERROR/MISSING nodes");
+    println!("ok: {}", comment_tree.root_node().to_sexp());
 }

@@ -242,6 +242,50 @@
               (identifier))))))))
 
 ==================
+3.9.2 Direct Comment Constructor
+==================
+
+<a><!-- a comment --></a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (direct_constructor
+              (direct_comment
+                (comment_content)))
+            (end_tag
+              (identifier))))))))
+
+==================
+3.9.2 Direct Comment Constructor with a lone dash
+==================
+
+<a><!-- a-b --></a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (direct_constructor
+              (direct_comment
+                (comment_content)))
+            (end_tag
+              (identifier))))))))
+
+==================
 3.9.3.1 Computed Element Constructors
 ==================
 
