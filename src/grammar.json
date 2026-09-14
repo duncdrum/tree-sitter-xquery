@@ -106,8 +106,16 @@
           "name": "module_declaration"
         },
         {
-          "type": "SYMBOL",
-          "name": "prolog"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "prolog"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },

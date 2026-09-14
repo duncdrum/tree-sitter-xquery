@@ -1,17 +1,22 @@
-4 Modules and Prologs 
 ==================
-4.1 Version Declaration 
+4.1 Version Declaration
 ==================
 
 xquery version "3.0" encoding "utf-8";
 ()
 
 ---
- 
-  (module 
-   (version_declaration (string_literal) (string_literal)) 
-   (main_module (parenthesized_expr)))
 
+(module
+  (version_declaration
+    (string_literal
+      (char_data))
+    (string_literal
+      (char_data)))
+  (main_module
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.2 Module Declaration
@@ -22,12 +27,15 @@ module namespace gis = "http://example.org/gis-functions";
 
 ---
 
-(module 
- (library_module 
-  (module_declaration (identifier) (string_literal))))
+(module
+  (library_module
+    (module_declaration
+      (identifier)
+      (string_literal
+        (char_data)))))
 
 ==================
-4.3 Boundary-space Declaration 
+4.3 Boundary-space Declaration
 ==================
 
 declare boundary-space preserve;
@@ -36,12 +44,16 @@ declare boundary-space preserve;
 
 ---
 
-(module 
- (main_module 
-  (boundary_space_declaration) (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (boundary_space_declaration))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.4 Default Collation Declaration 
+4.4 Default Collation Declaration
 ==================
 
 declare default collation "http://example.org/languages/Icelandic";
@@ -49,10 +61,15 @@ declare default collation "http://example.org/languages/Icelandic";
 
 ---
 
-(module 
- (main_module 
-  (default_collation_declaration (string_literal))
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (default_collation_declaration
+        (string_literal
+          (char_data))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.5 Base URI Declaration
@@ -63,13 +80,18 @@ declare base-uri "http://example.org";
 
 ---
 
-(module 
- (main_module 
-  (base_uri_declaration (string_literal))
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (base_uri_declaration
+        (string_literal
+          (char_data))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.6 Construction Declaration 
+4.6 Construction Declaration
 ==================
 
 declare construction strip;
@@ -77,10 +99,13 @@ declare construction strip;
 
 ---
 
-(module 
- (main_module 
-  (construction_declaration)
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (construction_declaration))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.7 Ordering Mode Declaration
@@ -91,10 +116,13 @@ declare ordering unordered;
 
 ---
 
-(module 
- (main_module 
-  (ordering_mode_declaration) 
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (ordering_mode_declaration))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.8 Empty Order Declaration
@@ -105,10 +133,13 @@ declare default order empty least;
 
 ---
 
-(module 
- (main_module 
-  (empty_order_declaration) 
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (empty_order_declaration))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.9 Copy-Namespaces Declaration
@@ -119,7 +150,13 @@ declare copy-namespaces preserve, no-inherit;
 
 ---
 
-(module (main_module (copy_namespaces_declaration) (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (copy_namespaces_declaration))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.10 Decimal Format Declaration
@@ -131,13 +168,24 @@ declare decimal-format local:de
 
 ---
 
-(module 
- (main_module 
-  (decimal_format_declaration (identifier) (identifier) (string_literal) (string_literal)) 
-  (parenthesized_expr))) 
+(module
+  (main_module
+    (prolog
+      (decimal_format_declaration
+        (identifier)
+        (identifier)
+        (df_property_define
+          (string_literal
+            (char_data)))
+        (df_property_define
+          (string_literal
+            (char_data)))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.11 Schema Import 
+4.11 Schema Import
 ==================
 
 import schema namespace soap="http://www.w3.org/2003/05/soap-envelope" 
@@ -147,14 +195,27 @@ import schema default element namespace "" at "http://example.org/xyz.xsd";
 
 ---
 
-(module 
- (main_module 
-  (schema_import (identifier) (string_literal) (string_literal)) 
-  (schema_import (string_literal) (string_literal)) 
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (schema_import
+        (schema_prefix
+          (identifier))
+        (string_literal
+          (char_data))
+        (string_literal
+          (char_data)))
+      (schema_import
+        (schema_prefix)
+        (string_literal)
+        (string_literal
+          (char_data))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.12 Module Import  
+4.12 Module Import
 ==================
 
 import module namespace geo = "http://example.org/geo-functions"; 
@@ -162,13 +223,19 @@ import module namespace geo = "http://example.org/geo-functions";
 
 ---
 
-(module 
- (main_module 
-  (module_import (identifier) (string_literal)) 
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (module_import
+        (identifier)
+        (string_literal
+          (char_data))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.13 Namespace Declaration 
+4.13 Namespace Declaration
 ==================
 
 declare namespace foo = "http://example.org";
@@ -176,16 +243,27 @@ declare namespace foo = "http://example.org";
 
 ---
 
-(module 
- (main_module 
- (namespace_declaration (identifier) (string_literal)) 
-  (direct_element 
-   (start_tag (identifier (identifier) (identifier))) 
-   (element_text (char_data))
-   (end_tag (identifier (identifier) (identifier))))))
+(module
+  (main_module
+    (prolog
+      (namespace_declaration
+        (identifier)
+        (string_literal
+          (char_data))))
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier)
+              (identifier))
+            (char_data)
+            (end_tag
+              (identifier)
+              (identifier))))))))
 
 ==================
-4.14 Default Namespace Declaration 
+4.14 Default Namespace Declaration
 ==================
 
 declare default element namespace "http://example.org/names";
@@ -194,11 +272,18 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions/math"
 
 ---
 
-(module 
- (main_module 
-  (default_namespace_declaration (string_literal)) 
-  (default_namespace_declaration (string_literal)) 
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (default_namespace_declaration
+        (string_literal
+          (char_data)))
+      (default_namespace_declaration
+        (string_literal
+          (char_data))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.15 Annotations
@@ -212,16 +297,26 @@ declare
 
 ---
 
-(module 
- (main_module 
-  (function_declaration 
-   (annotation (identifier) (identifier) (string_literal)) (identifier) (identifier) 
-   (param_list  (parameter (var_ref (identifier))) (parameter (var_ref (identifier))))) 
-  (parenthesized_expr)))
- 
+(module
+  (main_module
+    (prolog
+      (function_declaration
+        (annotation
+          (identifier)
+          (identifier)
+          (string_literal
+            (char_data)))
+        (identifier)
+        (identifier)
+        (param_list
+          (identifier)
+          (identifier))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.16 Variable Declaration 
+4.16 Variable Declaration
 ==================
 
 declare variable $x as xs:integer := 7;
@@ -229,17 +324,25 @@ declare variable $x as xs:integer := 7;
 
 ---
 
-(module 
- (main_module 
-  (variable_declaration 
-   (var_ref (identifier)) 
-   (type_declaration (sequence_type (atomic_or_union_type (identifier) (identifier)))) 
-   (integer_literal)) 
-  (parenthesized_expr)))
+(module
+  (main_module
+    (prolog
+      (variable_declaration
+        (variable
+          (identifier))
+        (type_declaration
+          (sequence_type
+            (atomic_or_union_type
+              (identifier)
+              (identifier))))
+        (rel_path_expr
+          (integer_literal))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
-  
 ==================
-4.17 Context Item Declaration 
+4.17 Context Item Declaration
 ==================
 
 declare context item as element(foo) external;
@@ -247,12 +350,18 @@ declare context item as element(foo) external;
 
 ---
 
-(module 
- (main_module 
-  (context_item_declaration 
-   (type_declaration (sequence_type (element_test (element_test_params (identifier)))))) 
-  (parenthesized_expr)))
-
+(module
+  (main_module
+    (prolog
+      (context_item_declaration
+        (type_declaration
+          (sequence_type
+            (element_test
+              (element_test_params
+                (identifier)))))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
 4.18 Function Declaration with params, as types and return type
@@ -265,17 +374,32 @@ function foo:summary($emps as element(employee)*) as element(dept)* {
 
 ---
 
-(module 
- (library_module 
-  (module_declaration (identifier) (string_literal)) 
-  (function_declaration (identifier) (identifier) 
-   (param_list 
-    (parameter (var_ref (identifier)) (type_declaration (sequence_type (element_test (element_test_params (identifier))) (occurrence_indicator))))) 
-   (type_declaration (sequence_type (element_test (element_test_params (identifier))) (occurrence_indicator))) 
-   (enclosed_expr))))
-   
+(module
+  (library_module
+    (module_declaration
+      (identifier)
+      (string_literal
+        (char_data)))
+    (prolog
+      (function_declaration
+        (identifier)
+        (identifier)
+        (param_list
+          (identifier)
+          (type_declaration
+            (sequence_type
+              (element_test
+                (element_test_params
+                  (identifier)))
+              (occurrence_indicator))))
+        (type_declaration
+          (sequence_type
+            (element_test
+              (element_test_params
+                (identifier)))
+            (occurrence_indicator)))
+        (enclosed_expr)))))
 
-  
 ==================
 4.18 Function Declaration with annotations (baseX docs example )
 ==================
@@ -291,43 +415,39 @@ function page:hello($who) {
 ---
 
 (module
-(library_module
-  (module_declaration
-    (identifier)
-    (string_literal))
-  (function_declaration
-    (annotation
+  (library_module
+    (module_declaration
       (identifier)
-      (identifier)
-      (string_literal))
-    (annotation
-      (identifier)
-      (identifier))
-    (identifier)
-    (identifier)
-    (param_list
-      (parameter
-        (var_ref
-          (identifier))))
-    (enclosed_expr
-      (direct_element
-        (start_tag
-          (identifier
-            (identifier)))
-        (element_text
-          (char_data))
-        (element_text
-          (enclosed_expr
-            (var_ref
-              (identifier))))
-        (element_text
-          (char_data))
-        (end_tag
-          (identifier
-            (identifier))))))))
-
-
-
+      (string_literal
+        (char_data)))
+    (prolog
+      (function_declaration
+        (annotation
+          (identifier)
+          (identifier)
+          (string_literal
+            (char_data)))
+        (annotation
+          (identifier)
+          (identifier))
+        (identifier)
+        (identifier)
+        (param_list
+          (identifier))
+        (enclosed_expr
+          (rel_path_expr
+            (direct_constructor
+              (direct_element
+                (start_tag
+                  (identifier))
+                (char_data)
+                (enclosed_expr
+                  (rel_path_expr
+                    (var_ref
+                      (identifier))))
+                (char_data)
+                (end_tag
+                  (identifier))))))))))
 
 ==================
 4.18 Function Declaration external
@@ -338,15 +458,21 @@ declare  function smath:copySign( $magnitude, $sign ) external;
 
 ---
 
-(module 
- (main_module 
-  (function_declaration (identifier) (identifier) 
-   (param_list (parameter (var_ref (identifier))) (parameter (var_ref (identifier))))) 
-  (parenthesized_expr)))
- 
+(module
+  (main_module
+    (prolog
+      (function_declaration
+        (identifier)
+        (identifier)
+        (param_list
+          (identifier)
+          (identifier))))
+    (query_body
+      (rel_path_expr
+        (parenthesized_expr)))))
 
 ==================
-4.19 Option Declaration 
+4.19 Option Declaration
 ==================
 
 module namespace foo = "http://example.org/#foo";
@@ -355,7 +481,19 @@ declare option output:method 'text';
 
 ---
 
-(module 
- (library_module (module_declaration (identifier) (string_literal)) 
-  (namespace_declaration (identifier) (string_literal)) 
-  (option_declaration (identifier) (identifier) (string_literal))))
+(module
+  (library_module
+    (module_declaration
+      (identifier)
+      (string_literal
+        (char_data)))
+    (prolog
+      (namespace_declaration
+        (identifier)
+        (string_literal
+          (char_data)))
+      (option_declaration
+        (identifier)
+        (identifier)
+        (string_literal
+          (char_data))))))
