@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: lts/*
 
       - name: Install tree-sitter CLI
         run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
@@ -72,7 +72,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: lts/*
       - name: Install tree-sitter CLI
         run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
       - name: Generate parser
@@ -87,10 +87,15 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: lts/*
       - name: Install tree-sitter CLI
         run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
       - name: Generate parser
         run: npx tree-sitter generate
       - name: Build the Rust binding
         run: cargo build --locked --verbose || cargo build --verbose
+      - name: Smoke test the Rust binding
+        # cargo build alone doesn't catch ABI mismatches between the compiled
+        # parser and the tree-sitter crate: Parser::set_language() fails at
+        # runtime, not at compile time. See issue #7.
+        run: cargo run --example smoke --locked --verbose || cargo run --example smoke --verbose

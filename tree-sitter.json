@@ -1,0 +1,38 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "xquery",
+      "camelcase": "XQuery",
+      "scope": "source.xquery",
+      "path": ".",
+      "file-types": ["xquery", "xqm", "xq", "xql"],
+      "highlights": "queries/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.2",
+    "license": "MIT",
+    "description": "XQuery grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Grant Mackenzie",
+        "email": "grantmacken@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/duncdrum/tree-sitter-xquery"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "node": true,
+    "python": false,
+    "rust": true,
+    "swift": false,
+    "java": false,
+    "kotlin": false,
+    "zig": false
+  }
+}
