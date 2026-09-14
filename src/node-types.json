@@ -3776,6 +3776,10 @@
         {
           "type": "direct_element",
           "named": true
+        },
+        {
+          "type": "direct_pi",
+          "named": true
         }
       ]
     }
@@ -3820,6 +3824,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "direct_pi",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "pi_content",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -9456,7 +9486,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "interpolation",
@@ -12368,6 +12398,10 @@
     "named": false
   },
   {
+    "type": "<?",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
@@ -12389,6 +12423,10 @@
   },
   {
     "type": "?",
+    "named": false
+  },
+  {
+    "type": "?>",
     "named": false
   },
   {
@@ -12818,6 +12856,10 @@
   {
     "type": "percent",
     "named": false
+  },
+  {
+    "type": "pi_content",
+    "named": true
   },
   {
     "type": "preceding",

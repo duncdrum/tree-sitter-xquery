@@ -1,7 +1,3 @@
-3.9 Node Constructors 
-3.10 String Constructors 
-3.11 Maps and Arrays 
-
 ==================
 3.9.1 Direct Element with plain text
 ==================
@@ -10,13 +6,17 @@
 
 -------------------
 
-(module 
- (main_module 
-  (direct_element 
-   (start_tag (identifier (identifier))) 
-   (element_text (char_data)) 
-   (end_tag (identifier (identifier))))))
- 
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (char_data)
+            (end_tag
+              (identifier))))))))
 
 ==================
 3.9.1 Direct Element with char reference
@@ -26,13 +26,20 @@
 
 -------------------
 
-(module 
- (main_module 
-  (direct_element 
-   (start_tag (identifier (identifier))) 
-   (element_text (char_ref)) 
-   (element_text (char_data)) 
-   (end_tag (identifier (identifier))))))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier
+                (identifier)))
+            (char_ref)
+            (char_data)
+            (end_tag
+              (identifier
+                (identifier)))))))))
 
 ==================
 3.9.1 Direct Element with entities
@@ -42,16 +49,21 @@
 
 -------------------
 
-(module 
- (main_module 
-  (direct_element 
-   (start_tag (identifier (identifier))) 
-   (element_text (char_data)) 
-   (element_text (predefined_entity_ref)) 
-   (element_text (char_data))
-   (element_text (predefined_entity_ref)) 
-   (element_text (char_data)) 
-   (end_tag (identifier (identifier))))))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (char_data)
+            (predefined_entity_ref)
+            (char_data)
+            (predefined_entity_ref)
+            (char_data)
+            (end_tag
+              (identifier))))))))
 
 ==================
 3.9.1 Direct Element with enclosed expression
@@ -61,13 +73,22 @@
 
 -------------------
 
-(module 
-(main_module 
-(direct_element 
-(start_tag (identifier (identifier))) 
-(element_text (char_data)) 
-(element_text (enclosed_expr (var_ref (identifier)))) 
-(end_tag (identifier (identifier))))))
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (char_data)
+            (enclosed_expr
+              (rel_path_expr
+                (var_ref
+                  (identifier
+                    (identifier)))))
+            (end_tag
+              (identifier))))))))
 
 ==================
 3.9.1 Direct Element with embeded element
@@ -79,20 +100,149 @@
 
 -------------------
 
-(module 
- (main_module 
-  (direct_element 
-   (start_tag (identifier (identifier))) 
-   (element_text (char_data)) 
-   (direct_element 
-    (start_tag (identifier (identifier))) 
-    (element_text (char_data)) 
-    (end_tag (identifier (identifier)))) 
-   (element_text (char_data)) 
-   (end_tag (identifier (identifier))))))
- 
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (char_data)
+            (direct_constructor
+              (direct_element
+                (start_tag
+                  (identifier))
+                (char_data)
+                (end_tag
+                  (identifier))))
+            (char_data)
+            (end_tag
+              (identifier))))))))
+
 ==================
-3.9.3.1 Computed Element Constructors 
+3.9.1 Direct Element with whitespace and newlines preserved
+==================
+
+<a>
+  line one
+  line two
+</a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (char_data)
+            (end_tag
+              (identifier))))))))
+
+==================
+3.9.1 Direct Element content that looks like a comment is not a comment
+==================
+
+<a>foo (: not a comment :) bar</a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (char_data)
+            (end_tag
+              (identifier))))))))
+
+==================
+3.9.1 Direct Element with escaped braces
+==================
+
+<a>{{ not-an-expr }}</a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (escape_enclosed)
+            (char_data)
+            (escape_enclosed)
+            (end_tag
+              (identifier))))))))
+
+==================
+3.9.1 Direct Element with processing instruction
+==================
+
+<a><?target some pi content?></a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (direct_constructor
+              (direct_pi
+                (identifier
+                  (identifier))
+                (pi_content)))
+            (end_tag
+              (identifier))))))))
+
+==================
+3.9.1 Direct Element deeply nested
+==================
+
+<a><b><c>deep</c></b></a>
+
+-------------------
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (direct_constructor
+          (direct_element
+            (start_tag
+              (identifier))
+            (direct_constructor
+              (direct_element
+                (start_tag
+                  (identifier))
+                (direct_constructor
+                  (direct_element
+                    (start_tag
+                      (identifier))
+                    (char_data)
+                    (end_tag
+                      (identifier))))
+                (end_tag
+                  (identifier))))
+            (end_tag
+              (identifier))))))))
+
+==================
+3.9.3.1 Computed Element Constructors
 ==================
 
 element book {
@@ -101,26 +251,32 @@ element book {
 
 ---
 
-(module 
- (main_module 
-  (comp_elem_constructor (identifier) 
-   (enclosed_expr 
-    (comp_elem_constructor (string_literal) 
-     (enclosed_expr (string_literal)))))))
-
+(module
+  (main_module
+    (comp_elem_constructor
+      (identifier)
+      (enclosed_expr
+        (comp_elem_constructor
+          (string_literal)
+          (enclosed_expr
+            (string_literal)))))))
 
 ==================
-3.9.3.2 Computed Attribute Constructors 
+3.9.3.2 Computed Attribute Constructors
 ==================
 
 attribute size {4 + 3}
 
 ---
 
-(module 
- (main_module 
-  (comp_attr_constructor (identifier) 
-   (enclosed_expr (additive_expr (integer_literal) (integer_literal))))))
+(module
+  (main_module
+    (comp_attr_constructor
+      (identifier)
+      (enclosed_expr
+        (additive_expr
+          (integer_literal)
+          (integer_literal))))))
 
 ==================
 3.9.3.3 Document Node Constructors
@@ -130,24 +286,24 @@ document {  }
 
 ---
 
-(module 
- (main_module 
-  (comp_doc_constructor 
-   (enclosed_expr))))
-
+(module
+  (main_module
+    (comp_doc_constructor
+      (enclosed_expr))))
 
 ==================
-3.9.3.4 Text Node Constructors 
+3.9.3.4 Text Node Constructors
 ==================
 
 text { 'hello' } 
 
 ---
 
-(module 
- (main_module 
-  (comp_text_constructor 
-   (enclosed_expr (string_literal)))))
+(module
+  (main_module
+    (comp_text_constructor
+      (enclosed_expr
+        (string_literal)))))
 
 ==================
 3.9.3.6 Computed Comment Constructors
@@ -157,13 +313,13 @@ comment { }
 
 ---
 
-(module 
- (main_module 
-  (comp_comment_constructor 
-   (enclosed_expr))))
+(module
+  (main_module
+    (comp_comment_constructor
+      (enclosed_expr))))
 
 ==================
-3.10 String Constructors 
+3.10 String Constructor with interpolation and trailing text
 ==================
 
 ``[`{$s}` fish]``
@@ -171,13 +327,87 @@ comment { }
 ---
 
 (module
- (main_module
- (string_constructor 
-  (interpolation (var_ref (identifier))) 
-  (char_group)
- )))
+  (main_module
+    (query_body
+      (rel_path_expr
+        (string_constructor
+          (interpolation
+            (rel_path_expr
+              (var_ref
+                (identifier))))
+          (string_constructor_chars))))))
 
+==================
+3.10 String Constructor empty
+==================
 
+``[]``
+
+---
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (string_constructor)))))
+
+==================
+3.10 String Constructor with standalone bracket and backtick that are not terminators
+==================
+
+``[a] b` c]``
+
+---
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (string_constructor
+          (string_constructor_chars))))))
+
+==================
+3.10 String Constructor with nested string constructor inside interpolation
+==================
+
+``[outer `{ if (true()) then ``[inner]`` else "" }` end]``
+
+---
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (string_constructor
+          (string_constructor_chars)
+          (interpolation
+            (if_expr
+              (rel_path_expr
+                (function_call
+                  (identifier)
+                  (arg_list)))
+              (rel_path_expr
+                (string_constructor
+                  (string_constructor_chars)))
+              (rel_path_expr
+                (string_literal))))
+          (string_constructor_chars))))))
+
+==================
+3.10 String Constructor spanning multiple lines
+==================
+
+``[line one
+line two]``
+
+---
+
+(module
+  (main_module
+    (query_body
+      (rel_path_expr
+        (string_constructor
+          (string_constructor_chars))))))
 
 ==================
 3.11.1.1 Map Constructors
@@ -190,12 +420,15 @@ map {
 
 ---
 
-(module 
- (main_module
- (map_constructor
-  (map_entry (string_literal) (string_literal)) 
-  (map_entry (string_literal) (string_literal)) 
- )))
+(module
+  (main_module
+    (map_constructor
+      (map_entry
+        (string_literal)
+        (string_literal))
+      (map_entry
+        (string_literal)
+        (string_literal)))))
 
 ==================
 3.11.2.1 Curly Array Constructor
@@ -206,11 +439,11 @@ array { 'one', 'two' }
 ---
 
 (module
- (main_module
-  (curly_array_constructor
-   (enclosed_expr  
-    (string_literal)
-    (string_literal)))))
+  (main_module
+    (curly_array_constructor
+      (enclosed_expr
+        (string_literal)
+        (string_literal)))))
 
 ==================
 3.11.2.1 Square Array Constructor
@@ -220,15 +453,14 @@ array { 'one', 'two' }
 
 ---
 
-(module 
- (main_module
- (square_array_constructor
-  (string_literal)
-  (string_literal)
- )))
+(module
+  (main_module
+    (square_array_constructor
+      (string_literal)
+      (string_literal))))
 
 ==================
-3.11.2.2 TODO! should resolve to Function call - Array Lookup using Function Call Syntax 
+3.11.2.2 TODO! should resolve to Function call - Array Lookup using Function Call Syntax
 ==================
 
 [ 'one', 'two' ](2) 
@@ -236,10 +468,13 @@ array { 'one', 'two' }
 ---
 
 (module
- (main_module 
-  (path_expr 
-   (square_array_constructor (string_literal) (string_literal)) 
-   (arg_list (integer_literal)))))
+  (main_module
+    (path_expr
+      (square_array_constructor
+        (string_literal)
+        (string_literal))
+      (arg_list
+        (integer_literal)))))
 
 ==================
 3.11.3.1 TODO! Unary Lookup with predicate
@@ -249,14 +484,17 @@ $mp[?name='Mike']
 
 ---
 
-(module 
- (main_module 
-  (path_expr 
-   (var_ref (identifier)) 
-   (predicate 
-    (comparison_expr 
-     (unary_lookup (NCName (identifier))) 
-     (string_literal)))))) 
+(module
+  (main_module
+    (path_expr
+      (var_ref
+        (identifier))
+      (predicate
+        (comparison_expr
+          (unary_lookup
+            (NCName
+              (identifier)))
+          (string_literal))))))
 
 ==================
 3.11.3.1 Unary Lookup with bang
@@ -266,12 +504,16 @@ $mp[?name='Mike']
 
 ---
 
-(module 
- (main_module 
-  (bang_expr (var_ref (identifier)) 
-   (comparison_expr 
-    (unary_lookup (NCName (identifier))) 
-    (string_literal)))))
+(module
+  (main_module
+    (bang_expr
+      (var_ref
+        (identifier))
+      (comparison_expr
+        (unary_lookup
+          (NCName
+            (identifier)))
+        (string_literal)))))
 
 ==================
 3.11.3.2 Postfix Lookup with array unary lookup: TODO? should be postfix_expr
@@ -281,8 +523,11 @@ $mp[?name='Mike']
 
 ---
 
-(module 
- (main_module 
-  (path_expr 
-   (square_array_constructor (string_literal) (string_literal)) 
-   (postfix_lookup (lookup_digit)))))
+(module
+  (main_module
+    (path_expr
+      (square_array_constructor
+        (string_literal)
+        (string_literal))
+      (postfix_lookup
+        (lookup_digit)))))

@@ -15,8 +15,7 @@ env:
   TREE_SITTER_VERSION: "0.27.0"
   # examples/spec/*.xq that are known not to parse yet. Keep this list empty
   # if you can; every entry needs an open issue.
-  #   string_constructors.xq -> issue #2
-  PARSE_EXCLUDE: "string_constructors.xq"
+  PARSE_EXCLUDE: ""
 
 jobs:
   grammar:
