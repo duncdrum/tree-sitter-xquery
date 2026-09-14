@@ -40,6 +40,7 @@ module.exports = grammar({
   // ],
   word: ($) => $.identifier,
   //conflicts: ($) => [],
+  externals: ($) => [$._string_constructor_chars_text, $._pi_content_text, $._direct_comment_text],
   supertypes: ($) => [
     $._setter,
     $._kind_test,
@@ -315,14 +316,9 @@ module.exports = grammar({
           $.curly_array_constructor // 176  array_constructor 174
         )
       ),
-    //_direct_constructor: ($) => choice($.direct_element, $.direct_comment, $.direct_pi), //141 TODO
-    direct_constructor: ($) => choice($.direct_element, $.direct_comment), //141
-    direct_comment: ($) => seq('<!--', repeat(/[^->]|[^-]>|[^-]->/), '-->'), // 149
-    // 1 '[^->] any symbol except reserved
-    //'2 [^-]> allow > when not a comment end
-    // 3 [^-]->  allow - when not a comment comment end
-    // 4 -[^>]   allow - when not followes by >
-    // TODO
+    direct_constructor: ($) => choice($.direct_element, $.direct_comment, $.direct_pi), //141
+    direct_comment: ($) => seq('<!--', optional(field('content', alias($._direct_comment_text, $.comment_content))), '-->'), // 149
+    direct_pi: ($) => seq('<?', field('target', alias($._ncname, $.identifier)), optional(seq(/\s+/, field('content', alias($._pi_content_text, $.pi_content)))), '?>'), // 150
     direct_element: ($) => choice(seq($.start_tag, repeat($._direct_element_content), $.end_tag), $.empty_tag),
     _direct_element_content: ($) => choice($.direct_constructor, $._common_content, $._element_content_char),
     _element_content_char: ($) => field('content', alias(/[^{}<&]+/, $.char_data)),
@@ -430,14 +426,9 @@ module.exports = grammar({
     map_entry: ($) => seq(field('key', $._expr_single), ':', field('value', $._expr_single)),
     curly_array_constructor: ($) => seq('array', field('content', $.enclosed_expr)),
     square_array_constructor: ($) => seq('[', optional($._expr_single), repeat(seq(',', $._expr_single)), ']'),
-    string_constructor: ($) => seq('``[', $.string_constructor_chars, repeat(seq($.interpolation, $.string_constructor_chars)), ']``'), // 177
-    string_constructor_chars: ($) => repeat1(/[^`{\]]|[\]][^`]|[\]]`[^`]|[^`][{]|[{][`{\]]|`[^{]/),
-    // 1  [^`{\]] // any symbol except reserved
-    // 2 [\]][^`] allow closing ] which is not a constuctor end
-    // 3 [\]]`[^`] allow closing seq ]` without second ` which is not a constuctor end
-    // 4 [^`][{] allow { if not opening interpolation seq
-    // 5 [{][`{\]] allow standalone { or {` or {{ or {[ which is not a interpolation start
-    // 6 `[^{] allow standalone ` which is not a interpolation start
+    string_constructor: ($) =>
+      seq('``[', optional($.string_constructor_chars), repeat(seq($.interpolation, optional($.string_constructor_chars))), ']``'), // 177
+    string_constructor_chars: ($) => $._string_constructor_chars_text,
     interpolation: ($) => seq('`{', $._expr, '}`'), // 180',
     string_literal: ($) => choice($._string_quote, $._string_apos),
     _string_quote: ($) => seq('"', repeat($._string_quote_content), '"'),

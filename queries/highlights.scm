@@ -92,6 +92,10 @@ axis: (_) @constant.axis_step
 (empty_tag . "<" @tag.delimiter "/>" @tag.delimiter) @tag.empty
 (direct_attribute "=" @operator.assignment.attr) @tag.attribute
 (attribute_value ["'" "\"" ] @punctuation.bracket)
+;3.9.2 Direct Comment and Processing Instruction Constructors
+(direct_comment) @comment
+(direct_pi . "<?" @tag.delimiter target: (identifier) @tag.pi.target "?>" @tag.delimiter) @tag.pi
+(pi_content) @string
 ; 3.9.3 Computed Constructors
 computed_constructor: (_ .
   [ "element" "attribute" "document" "text" "processing-instruction" 
