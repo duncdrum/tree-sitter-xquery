@@ -1,0 +1,40 @@
+src/scanner.c
+  s_a20d1be3bdb77c::t_9f4d142d415f69 3,25-38,42-44,46-47,51,58-59,62,64-65,70,74-85,87-97
+  s_a20d1be3bdb77c::t_fdebf50ad3f2d5 45,60
+grammar.js
+  s_a20d1be3bdb77c::t_014ceb5cb7e990 320
+bindings/rust/lib.rs
+  s_a20d1be3bdb77c::t_5d61b6b7e87eee 9
+test/corpus/constructors.txt
+  s_a20d1be3bdb77c::t_bc457f576a35a4 245-251,265-273,287
+  s_a20d1be3bdb77c::t_ff245e649b1be8 244
+  s_a20d1be3bdb77c::t_6b0e22e875865f 252-264,274-286
+queries/highlights.scm
+  s_a20d1be3bdb77c::t_3118aed3903fc7 95-96,98
+  s_a20d1be3bdb77c::t_c102d383ab88f3 97
+examples/smoke.rs
+  s_a20d1be3bdb77c::t_63a0f170b3e64b 17-25
+src/grammar.json
+  s_a20d1be3bdb77c::t_27b943988ddff4 4075-4085
+src/node-types.json
+  s_a20d1be3bdb77c::t_27b943988ddff4 3762-3773,12563-12565
+  s_a20d1be3bdb77c::t_e877efdc5a2901 12566
+src/parser.c
+  s_a20d1be3bdb77c::t_581521ad44d03d 671,2175,265543-265544
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7305dcef23715e490679d7e2b9ac9b140ee6b328",
+  "prompts": {},
+  "sessions": {
+    "s_a20d1be3bdb77c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a9884b31-2b04-4c69-ad94-d1032cb9b8be",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
