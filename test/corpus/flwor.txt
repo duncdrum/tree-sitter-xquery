@@ -1,5 +1,3 @@
-3.12 FLWOR Expressions
-
 ==================
 3.12.1 Variable Bindings single bind
 ==================
@@ -9,12 +7,18 @@ return ()
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (let_clause (let_binding (var_ref (identifier)) (integer_literal))) 
-   (return_clause (parenthesized_expr)))))
-
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (let_clause
+          (let_binding
+            (identifier)
+            (rel_path_expr
+              (integer_literal))))
+        (return_clause
+          (rel_path_expr
+            (parenthesized_expr)))))))
 
 ==================
 3.12.1 Variable  multiple binds
@@ -25,14 +29,28 @@ return ()
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (let_clause 
-    (let_binding (var_ref (identifier)) (integer_literal)) 
-    (let_binding (var_ref (identifier)) (function_call (identifier) (arg_list (var_ref (identifier)))))) 
-   (return_clause (parenthesized_expr)))))
- 
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (let_clause
+          (let_binding
+            (identifier)
+            (rel_path_expr
+              (integer_literal)))
+          (let_binding
+            (identifier)
+            (rel_path_expr
+              (function_call
+                (identifier)
+                (arg_list
+                  (rel_path_expr
+                    (var_ref
+                      (identifier))))))))
+        (return_clause
+          (rel_path_expr
+            (parenthesized_expr)))))))
+
 ==================
 3.12.1 Variable Bindings accompanied by a type declaration
 ==================
@@ -42,17 +60,28 @@ return  $salary
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (let_clause 
-    (let_binding (var_ref (identifier)) 
-     (type_declaration (sequence_type (atomic_or_union_type (identifier) (identifier))))
-     (string_literal)))
-   (return_clause (var_ref (identifier))))))
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (let_clause
+          (let_binding
+            (identifier)
+            (type_declaration
+              (sequence_type
+                (atomic_or_union_type
+                  (identifier)
+                  (identifier))))
+            (rel_path_expr
+              (string_literal
+                (char_data)))))
+        (return_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))))))))
 
 ==================
-3.12.2 For Clause 
+3.12.2 For Clause
 ==================
 
 for $x in $expr1
@@ -60,14 +89,20 @@ return  $x
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (for_clause 
-    (for_binding
-      (var_ref (identifier)) 
-      (var_ref (identifier))))
-   (return_clause (var_ref (identifier))))))
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (for_clause
+          (for_binding
+            (identifier)
+            (rel_path_expr
+              (var_ref
+                (identifier)))))
+        (return_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))))))))
 
 ==================
 3.12.5 Where Clause
@@ -79,18 +114,35 @@ return $x
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (for_clause 
-    (for_binding
-     (var_ref (identifier)) 
-     (var_ref (identifier)) (var_ref (identifier)))) 
-   (where_clause (comparison_expr (multiplicative_expr (var_ref (identifier)) (integer_literal)) (integer_literal))) 
-   (return_clause (var_ref (identifier))))))
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (for_clause
+          (for_binding
+            (identifier)
+            (variable
+              (identifier))
+            (rel_path_expr
+              (var_ref
+                (identifier)))))
+        (where_clause
+          (multiplicative_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (comparison_expr
+              (rel_path_expr
+                (integer_literal))
+              (rel_path_expr
+                (integer_literal)))))
+        (return_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))))))))
 
 ==================
-3.12.6 Count Clause 
+3.12.6 Count Clause
 ==================
 
 for $p in $products
@@ -102,19 +154,37 @@ return
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (for_clause 
-    (for_binding
-     (var_ref (identifier)) (var_ref (identifier))))
-   (order_by_clause 
-    (path_expr (var_ref (identifier)) (name_test (identifier))) 
-    (order_direction))
-   (count_clause (identifier)) 
-   (where_clause (comparison_expr (var_ref (identifier)) (integer_literal))) 
-   (return_clause (parenthesized_expr)))))
-
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (for_clause
+          (for_binding
+            (identifier)
+            (rel_path_expr
+              (var_ref
+                (identifier)))))
+        (order_by_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))
+            (abbrev_forward_step
+              (name_test
+                (identifier))))
+          (order_direction))
+        (count_clause
+          (variable
+            (identifier)))
+        (where_clause
+          (comparison_expr
+            (rel_path_expr
+              (var_ref
+                (identifier)))
+            (rel_path_expr
+              (integer_literal))))
+        (return_clause
+          (rel_path_expr
+            (parenthesized_expr)))))))
 
 ==================
 3.12.7 Group By Clause TODO more examples
@@ -127,32 +197,40 @@ return $g1
 ---
 
 (module
-(main_module
-  (flwor_expr
-    (let_clause
-      (let_binding
-        (var_ref
-          (identifier))
-        (var_ref
-          (identifier))))
-    (let_clause
-      (let_binding
-        (var_ref
-          (identifier))
-        (var_ref
-          (identifier))))
-    (group_by_clause
-      (identifier)
-      (identifier)
-      (identifier)
-      (string_literal))
-    (return_clause
-      (var_ref
-        (identifier))))))
-
+  (main_module
+    (query_body
+      (flwor_expr
+        (let_clause
+          (let_binding
+            (identifier)
+            (rel_path_expr
+              (var_ref
+                (identifier)))))
+        (let_clause
+          (let_binding
+            (identifier)
+            (rel_path_expr
+              (var_ref
+                (identifier)))))
+        (group_by_clause
+          (grouping_spec
+            (variable
+              (identifier)))
+          (grouping_spec
+            (variable
+              (identifier)))
+          (grouping_spec
+            (variable
+              (identifier))
+            (string_literal
+              (char_data))))
+        (return_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))))))))
 
 ==================
-3.12.8 Order By Clause 
+3.12.8 Order By Clause
 ==================
 
 for $e in $employees
@@ -161,14 +239,28 @@ return $e/name
 
 ---
 
-(module 
- (main_module 
-  (flwor_expr 
-   (for_clause 
-    (for_binding
-     (var_ref (identifier)) (var_ref (identifier))))
-   (order_by_clause 
-    (path_expr (var_ref (identifier)) (name_test (identifier)))
-    (order_direction))
-   (return_clause (path_expr (var_ref (identifier)) (name_test (identifier)))))))
-
+(module
+  (main_module
+    (query_body
+      (flwor_expr
+        (for_clause
+          (for_binding
+            (identifier)
+            (rel_path_expr
+              (var_ref
+                (identifier)))))
+        (order_by_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))
+            (abbrev_forward_step
+              (name_test
+                (identifier))))
+          (order_direction))
+        (return_clause
+          (rel_path_expr
+            (var_ref
+              (identifier))
+            (abbrev_forward_step
+              (name_test
+                (identifier)))))))))

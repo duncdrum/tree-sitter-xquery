@@ -4,6 +4,7 @@ Comments with single-char parens (GPL headers)
 
 (: Copyright (C) 2015 :)
 xquery version "3.1";
+1
 
 --------------------------------------------------------------------------------
 
@@ -15,9 +16,7 @@ xquery version "3.1";
   (main_module
     (query_body
       (rel_path_expr
-        (abbrev_forward_step
-          (name_test
-            (MISSING identifier)))))))
+        (integer_literal)))))
 
 ================================================================================
 Doc-style GPL header before library module
