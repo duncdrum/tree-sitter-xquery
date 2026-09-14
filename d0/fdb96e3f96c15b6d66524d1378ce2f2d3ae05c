@@ -1,0 +1,33 @@
+bindings/node/binding.cc
+  s_a20d1be3bdb77c::t_d0a7912375fa06 1,3,5,7-10,12-16,19
+Cargo.toml
+  s_a20d1be3bdb77c::t_fe2eecc2cf4fef 7
+bindings/node/binding_test.js
+  s_a20d1be3bdb77c::t_43ecccacf550f1 1-9
+.github/workflows/ci.yml
+  s_a20d1be3bdb77c::t_441606f2c16763 102-105
+bindings/node/index.js
+  s_a20d1be3bdb77c::t_5d48cd4f42e811 1-7
+binding.gyp
+  s_a20d1be3bdb77c::t_65765e8e0598bc 5-7,9,15-32
+package.json
+  s_a20d1be3bdb77c::t_3767fd53b7319e 17,20,24,26,29-32,35-36,40
+yarn.lock
+  s_a20d1be3bdb77c::t_9e9d84a8cae1ba 5-8,10-13,20,25-28,30-31,33-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d0fdb96e3f96c15b6d66524d1378ce2f2d3ae05c",
+  "prompts": {},
+  "sessions": {
+    "s_a20d1be3bdb77c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a9884b31-2b04-4c69-ad94-d1032cb9b8be",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
