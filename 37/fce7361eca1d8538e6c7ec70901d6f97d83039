@@ -1,0 +1,14 @@
+.gitignore
+  h_ff0005bef58c9d 11-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "37fce7361eca1d8538e6c7ec70901d6f97d83039",
+  "prompts": {},
+  "humans": {
+    "h_ff0005bef58c9d": {
+      "author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
