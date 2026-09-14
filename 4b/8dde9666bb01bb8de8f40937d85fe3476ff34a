@@ -1,0 +1,36 @@
+.github/workflows/ci.yml
+  s_a20d1be3bdb77c::t_fb846774fb11e5 30,75,90
+  s_a20d1be3bdb77c::t_ab9f117fe49f3e 97-101
+.nvmrc
+  s_a20d1be3bdb77c::t_8385d11bec83ae 1
+examples/smoke.rs
+  s_a20d1be3bdb77c::t_392133a2c540ac 1-8
+tree-sitter.json
+  s_a20d1be3bdb77c::t_8a2a36ffc4c0a2 1-38
+package.json
+  s_a20d1be3bdb77c::t_d2663cfc2e630b 38-42
+.gitignore
+  s_a20d1be3bdb77c::t_a0c2151dca5d72 3
+Cargo.toml
+  s_a20d1be3bdb77c::t_745ee607c68c5f 23
+Cargo.lock
+  s_a20d1be3bdb77c::t_f96a214c1b3a15 24-29,36-57,64-81,111-153,160-176,179,181,185-187,190-195,203-214
+src/parser.c
+  s_a20d1be3bdb77c::t_90f36069bea516 264812-264813
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4b8dde9666bb01bb8de8f40937d85fe3476ff34a",
+  "prompts": {},
+  "sessions": {
+    "s_a20d1be3bdb77c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a9884b31-2b04-4c69-ad94-d1032cb9b8be",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
