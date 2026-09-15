@@ -34,21 +34,36 @@ function parseFixture(specFile) {
   return parser.parse(source);
 }
 
+// Vendor-specific test-annotation fixtures (XQSuite, BaseX Unit Module)
+// don't belong in examples/spec (W3C conformance examples) or examples/qt3
+// (the QT3 test suite) - both are vendor-neutral by design. Source strings
+// passed directly here are how those get tested instead.
+function parseSource(source) {
+  return parser.parse(source);
+}
+
 function buildQuery(queryName, { stripPredicates = false } = {}) {
   const source = stripPredicates ? stripUnsupportedPredicates(rawSource(queryName)) : rawSource(queryName);
   return new Query(XQuery, source);
 }
 
-// Runs queries/<queryName>.scm against examples/spec/<specFile>, returning
-// every capture as a plain {name, text} pair. Query files can (and here,
+// Runs queries/<queryName>.scm against a parsed tree, returning every
+// capture as a plain {name, text} pair. Query files can (and here,
 // deliberately do) match the same node more than once via separate
 // patterns - e.g. a generic bracket-pair rule and a construct-specific rule
 // both matching an `if_expr` - so callers should assert with `.some(...)`
 // rather than on exact capture counts.
-function captures(queryName, specFile, opts) {
-  const tree = parseFixture(specFile);
+function capturesOf(tree, queryName, opts) {
   const query = buildQuery(queryName, opts);
   return query.captures(tree.rootNode).map((c) => ({ name: c.name, text: c.node.text }));
+}
+
+function captures(queryName, specFile, opts) {
+  return capturesOf(parseFixture(specFile), queryName, opts);
+}
+
+function capturesFromSource(queryName, source, opts) {
+  return capturesOf(parseSource(source), queryName, opts);
 }
 
 function textsFor(caps, name) {
@@ -56,17 +71,24 @@ function textsFor(caps, name) {
 }
 
 // Like captures(), but grouped by match instead of flattened - needed when
-// a test cares which captures co-occurred in the same pattern (e.g. that a
-// specific @indent capture also carries a @start/@end boundary from that
-// same pattern, not from some other pattern that happens to match the same
-// node).
-function matches(queryName, specFile, opts) {
-  const tree = parseFixture(specFile);
+// a test cares which captures (or #set! properties, e.g. runnables.scm's
+// `tag`) co-occurred in the same pattern, not just that they exist
+// somewhere in the file's overall capture list.
+function matchesOf(tree, queryName, opts) {
   const query = buildQuery(queryName, opts);
   return query.matches(tree.rootNode).map((m) => ({
     pattern: m.pattern,
     captures: m.captures.map((c) => ({ name: c.name, text: c.node.text, type: c.node.type })),
+    setProperties: m.setProperties,
   }));
 }
 
-module.exports = { captures, textsFor, matches, rawSource };
+function matches(queryName, specFile, opts) {
+  return matchesOf(parseFixture(specFile), queryName, opts);
+}
+
+function matchesFromSource(queryName, source, opts) {
+  return matchesOf(parseSource(source), queryName, opts);
+}
+
+module.exports = { captures, capturesFromSource, textsFor, matches, matchesFromSource, rawSource };
