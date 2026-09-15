@@ -22,3 +22,11 @@ test("brackets: matches the Q{...} braced URI literal delimiters", () => {
   assert.ok(textsFor(caps, "open").includes("Q{"));
   assert.ok(textsFor(caps, "close").includes("}"));
 });
+
+test("brackets: matches ``[ ]`` string constructor and `{ }` interpolation delimiters", () => {
+  const caps = captures("brackets", "string_constructors.xq");
+  assert.ok(textsFor(caps, "open").includes("``["));
+  assert.ok(textsFor(caps, "close").includes("]``"));
+  assert.ok(textsFor(caps, "open").includes("`{"));
+  assert.ok(textsFor(caps, "close").includes("}`"));
+});

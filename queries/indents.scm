@@ -66,7 +66,17 @@
 ; Conditionals and branching constructs have no braces of their own, so a
 ; flat single indent level covers the whole then/else, satisfies, or case
 ; body.
-(if_expr) @indent
+;
+; if_expr's condition is an inlined `seq('(', expr, ')')` with no wrapping
+; node, so "(" and ")" are direct children of if_expr itself - the generic
+; paren rule above already matches if_expr and indents the condition's own
+; interior (up to the ")"). Anchoring this rule's start to that same ")"
+; with @start keeps the two ranges disjoint: one covers the condition, this
+; one covers "then ... else ...". Without @start here, both rules would
+; independently indent the whole node from "if" onward, double-counting
+; every line inside a multi-line condition.
+(if_expr
+  ")" @start) @indent
 
 (quantified_expr) @indent
 

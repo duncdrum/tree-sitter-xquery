@@ -27,4 +27,19 @@ function textsFor(caps, name) {
   return caps.filter((c) => c.name === name).map((c) => c.text);
 }
 
-module.exports = { captures, textsFor };
+// Like captures(), but grouped by match instead of flattened - needed when
+// a test cares which captures co-occurred in the same pattern (e.g. that a
+// specific @indent capture also carries a @start/@end boundary from that
+// same pattern, not from some other pattern that happens to match the same
+// node).
+function matches(queryName, specFile) {
+  const source = fs.readFileSync(path.join(root, "examples", "spec", specFile), "utf8");
+  const tree = parser.parse(source);
+  const query = new Query(XQuery, fs.readFileSync(path.join(root, "queries", `${queryName}.scm`), "utf8"));
+  return query.matches(tree.rootNode).map((m) => ({
+    pattern: m.pattern,
+    captures: m.captures.map((c) => ({ name: c.name, text: c.node.text, type: c.node.type })),
+  }));
+}
+
+module.exports = { captures, textsFor, matches };
