@@ -1,0 +1,32 @@
+test/queries/indents_test.js
+  s_c6288d06e1f14e::t_5f026e5310fe05 11
+  s_c6288d06e1f14e::t_b0bf9540bb24a6 1-10,12-34
+test/queries/helper.js
+  s_c6288d06e1f14e::t_c43ed7ae1adc08 1-30
+test/queries/textobjects_test.js
+  s_c6288d06e1f14e::t_afa772bdffc161 1-22
+.github/workflows/ci.yml
+  s_c6288d06e1f14e::t_78829de2fc2ddc 119-125
+package.json
+  s_c6288d06e1f14e::t_5ac08e80bfc919 27
+test/queries/outline_test.js
+  s_c6288d06e1f14e::t_e580fc40deffc5 1-39
+test/queries/brackets_test.js
+  s_c6288d06e1f14e::t_f2cef42d24d45b 1-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "1ad3082f288f728cce0720d753414eaaa55bba1f",
+  "prompts": {},
+  "sessions": {
+    "s_c6288d06e1f14e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4386eb4f-f151-4975-9ed9-9d1687172beb",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
