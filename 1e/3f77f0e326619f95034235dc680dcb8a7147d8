@@ -1,0 +1,24 @@
+test/queries/injections_test.js
+  s_c6288d06e1f14e::t_1c1240f53c21c1 4-9,12
+  s_c6288d06e1f14e::t_189e205e6aabb3 10-11,15,27,30-51
+queries/runnables.scm
+  s_c6288d06e1f14e::t_a8ab07d66cee16 35-49
+queries/injections.scm
+  s_c6288d06e1f14e::t_f58656a7fc8b3b 10-20,22-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "1e3f77f0e326619f95034235dc680dcb8a7147d8",
+  "prompts": {},
+  "sessions": {
+    "s_c6288d06e1f14e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4386eb4f-f151-4975-9ed9-9d1687172beb",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
