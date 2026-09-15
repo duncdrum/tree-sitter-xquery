@@ -32,6 +32,21 @@
 ; resolution elsewhere in this project, deferred to the semantic layer.
 ; This matches the conventional prefixes essentially all real-world code
 ; uses, the same tradeoff Python's own identifier-text matching accepts.
+;
+; Known limitation: a function with more than one qualifying annotation
+; (e.g. `%test:assertEquals(5) %test:assertTrue` stacked on one function -
+; a real, documented XQSuite pattern) produces one match per qualifying
+; annotation, all with the same @run node and tag. Tree-sitter predicates
+; over a repeated capture require *every* bound instance to satisfy them
+; (verified directly - `(#any-of? @cap ...)` against a multi-bound @cap
+; fails unless all instances match, there is no "at least one" form), so
+; there's no query-level way to check "this function has at least one
+; qualifying annotation" without matching once per annotation that
+; qualifies. Not wrong information - worst case is a duplicate gutter icon
+; or task entry at the same position - so left as-is rather than forcing a
+; structural workaround (e.g. anchoring to "first annotation only") that
+; would break the common `%test:args(...) %test:assertEquals(...)`
+; ordering instead.
 
 ((function_declaration
   (annotation
