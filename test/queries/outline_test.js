@@ -23,6 +23,17 @@ test("outline: names module-level variable declarations, prefixed and unprefixed
   assert.ok(names.includes("time"), "%eg:volatile-annotated $time");
 });
 
+test("outline: an inline function's %annotation is not captured as an orphan @annotation", () => {
+  // %local:inline (...) function() as xs:integer+ {...} - inline_function_expr
+  // isn't an outline @item, so its annotation must not be captured either;
+  // otherwise it'd be a stray @annotation the outline panel has nothing to
+  // attach it to (the outline header comment promises annotations render
+  // "above the declaration they attach to").
+  const caps = captures("outline", "primary_expressions.xq");
+  assert.deepStrictEqual(textsFor(caps, "annotation"), []);
+  assert.deepStrictEqual(textsFor(caps, "item"), []);
+});
+
 test("outline: module declaration names the namespace prefix", () => {
   const names = textsFor(captures("outline", "module_declaration.xq"), "name");
   assert.strictEqual(names[0], "gis");

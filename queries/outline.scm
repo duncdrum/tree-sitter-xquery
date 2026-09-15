@@ -11,7 +11,16 @@
 ; never both on the same node, so a pair of patterns covers both spellings
 ; without ambiguity or duplicate matches.
 
-(annotation) @annotation
+; Scoped to the two node types this file treats as @items. `annotation` also
+; appears on inline_function_expr and in function-type sequence types
+; (any_function_test/typed_function_test), which aren't outline items here -
+; a bare top-level `(annotation) @annotation` would capture those too, as a
+; stray @annotation with no @item for it to attach to.
+(function_declaration
+  (annotation) @annotation)
+
+(variable_declaration
+  (annotation) @annotation)
 
 ; declare [%annotation] function prefix:localname(...) { ... }
 (function_declaration
