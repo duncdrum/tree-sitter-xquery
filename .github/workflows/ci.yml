@@ -116,3 +116,10 @@ jobs:
         run: npm install
       - name: Smoke test the Node binding
         run: npm run test:node
+      - name: Test query captures (outline, indents, brackets, textobjects)
+        # Compiles + runs queries/*.scm against real .xq fixtures and asserts
+        # on the actual captures, catching regressions the plain compile
+        # check in the `grammar` job (valid node/field names) can't: wrong
+        # capture names, a pattern silently matching nothing, wrong node
+        # selected, etc.
+        run: npm run test:queries
