@@ -24,6 +24,7 @@
     "install": "node-gyp-build",
     "test": "tree-sitter test",
     "test:node": "node --test bindings/node/*_test.js",
+    "test:queries": "node --test test/queries/*_test.js",
     "parse": "tree-sitter parse",
     "highlight": "tree-sitter query --captures queries/highlights.scm",
     "build": "yarn generate && node-gyp-build",
