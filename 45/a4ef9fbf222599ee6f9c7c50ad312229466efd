@@ -1,0 +1,28 @@
+queries/textobjects.scm
+  s_c6288d06e1f14e::t_11cdcdad52f09c 7-13,18-19
+  s_c6288d06e1f14e::t_9e68304d6f4bba 14-17
+test/queries/outline_test.js
+  s_c6288d06e1f14e::t_4ed0b633e42f1f 26-36
+test/queries/helper.js
+  s_c6288d06e1f14e::t_b754bb39b398eb 13-41,48-50,63-65,72
+queries/outline.scm
+  s_c6288d06e1f14e::t_0ca7301bc17aa0 14-23
+test/queries/textobjects_test.js
+  s_c6288d06e1f14e::t_a6402485de4330 4-12,15,20,26,31-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "45a4ef9fbf222599ee6f9c7c50ad312229466efd",
+  "prompts": {},
+  "sessions": {
+    "s_c6288d06e1f14e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4386eb4f-f151-4975-9ed9-9d1687172beb",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
