@@ -1,0 +1,26 @@
+test/queries/brackets_test.js
+  s_c6288d06e1f14e::t_3dc017c84065e0 25-32
+test/queries/helper.js
+  s_c6288d06e1f14e::t_46b44e6e5a210e 32
+  s_c6288d06e1f14e::t_2df996864cc04f 30-31,33-45
+test/queries/indents_test.js
+  s_c6288d06e1f14e::t_c78fbb6ac586ec 4,31-80
+queries/indents.scm
+  s_c6288d06e1f14e::t_8022ea815fe358 69-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d256d8efc64184edbe7834297bbca6161382b697",
+  "prompts": {},
+  "sessions": {
+    "s_c6288d06e1f14e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4386eb4f-f151-4975-9ed9-9d1687172beb",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
