@@ -1,0 +1,27 @@
+queries/runnables.scm
+  s_c6288d06e1f14e::t_a63356472ff8da 1-35,37-42,44,46-51,53,55-60,62,64-69
+  s_c6288d06e1f14e::t_d6f4881048b1b2 36,43,45,52,54,61,63,70
+test/queries/helper.js
+  s_c6288d06e1f14e::t_a8ac57c109ac06 65,67-68
+  s_c6288d06e1f14e::t_afeeaab99d602f 37-44
+  s_c6288d06e1f14e::t_702ae0001331ae 50-51,56,61-63,66,74-77,82,86-94
+  s_c6288d06e1f14e::t_cd24f746b510cc 64
+test/queries/runnables_test.js
+  s_c6288d06e1f14e::t_b1c3eaea787ea4 1-84
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "083dbba29b169a07c16d8c3b2c829ff9926e0519",
+  "prompts": {},
+  "sessions": {
+    "s_c6288d06e1f14e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4386eb4f-f151-4975-9ed9-9d1687172beb",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
