@@ -1,0 +1,25 @@
+queries/indents.scm
+  s_c6288d06e1f14e::t_7a34e05150353e 1-75
+queries/textobjects.scm
+  s_c6288d06e1f14e::t_883deed8b9d780 1-21
+queries/outline.scm
+  s_c6288d06e1f14e::t_2d96cc062c6ae8 1-64
+queries/brackets.scm
+  s_c6288d06e1f14e::t_f9b424a551e900 1-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4e316b7e21ee0983ce568e612b30c436afbaf813",
+  "prompts": {},
+  "sessions": {
+    "s_c6288d06e1f14e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4386eb4f-f151-4975-9ed9-9d1687172beb",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
