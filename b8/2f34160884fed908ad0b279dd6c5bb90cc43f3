@@ -1,0 +1,23 @@
+queries/highlights.scm
+  s_98a5fcf0e9c3d8::t_4efe7ae020dfaa 21
+  s_98a5fcf0e9c3d8::t_ec49673417763a 172-181,183-185,187,189-191,193,195-197,199-200,202-203,205,207,209-210,212-215,217,220,224,226
+  s_98a5fcf0e9c3d8::t_46205953f85b38 51
+test/queries/highlights_test.js
+  s_98a5fcf0e9c3d8::t_8d80aa5233b5ed 6-38,56-60,63-66,69-87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "b82f34160884fed908ad0b279dd6c5bb90cc43f3",
+  "prompts": {},
+  "sessions": {
+    "s_98a5fcf0e9c3d8": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d1eaf2b-301c-40d4-b4af-325860fd77f6",
+        "model": "grok-4.6"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
