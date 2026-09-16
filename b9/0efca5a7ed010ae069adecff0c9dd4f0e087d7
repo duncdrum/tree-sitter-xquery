@@ -1,0 +1,19 @@
+.gitignore
+  s_98a5fcf0e9c3d8::t_4925bcd150ddb4 1-2,5-7,9-10,12-17,19-20,24-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "b90efca5a7ed010ae069adecff0c9dd4f0e087d7",
+  "prompts": {},
+  "sessions": {
+    "s_98a5fcf0e9c3d8": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d1eaf2b-301c-40d4-b4af-325860fd77f6",
+        "model": "grok-4.6"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
