@@ -1,0 +1,22 @@
+test/queries/highlights_test.js
+  s_98a5fcf0e9c3d8::t_ff7024680cfbf8 1-35
+queries/highlights.scm
+  s_98a5fcf0e9c3d8::t_b28fe7d31314b8 120-123
+  s_98a5fcf0e9c3d8::t_2cef24a0d1c8fd 198
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "82267e016e955c71b5e879583ef77a8edd445a51",
+  "prompts": {},
+  "sessions": {
+    "s_98a5fcf0e9c3d8": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0d1eaf2b-301c-40d4-b4af-325860fd77f6",
+        "model": "grok-4.6"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
