@@ -18,7 +18,7 @@
  kind_test: (_) @type.kind_test
  (any_item) @type.any_test
  func_test: (_) @type.func_test
-(occurrence_indicator) @symbol.occurrence_indicator
+(occurrence_indicator) @punctuation.special
 (wildcard) @type.wildcard
 ; 3.1 Primary Expressions
 ; 3.1.1 Literals 
@@ -48,7 +48,7 @@
    )*
   (arg_list) @function.call
 )
-(arg_list arg: (placeholder) @parameter.placeholder)
+(arg_list arg: (placeholder) @variable.parameter)
 ; 3.2.2 Dynamic Function Calls
 ; 3.1.6 Named Function References 
 (named_function_ref "#" @punctuation.delimiter . (integer_literal) ) @function.named_function_ref
@@ -117,8 +117,10 @@ computed_constructor: (_ .
 ; 3.12 FLWOR Expressions TODO
 (tumbling_window_clause . "for" "tumbling" "window" "in" ) @keyword.tumbling_window_clause
 (sliding_window_clause . "for" "sliding" "window" "in" )  @keyword.sliding_window_clause 
-(window_start_condition "start" "at""previous" "next" "when"  @keyword.window_start_condition ) 
-(window_end_condition "end" "at" "previous" "next" "when" @keyword.window_end_condition) 
+; at/previous/next (and end's "only") are optional in the grammar, so
+; list them as alternatives rather than a required consecutive sequence.
+(window_start_condition ["start" "at" "previous" "next" "when"] @keyword.window_start_condition)
+(window_end_condition ["only" "end" "at" "previous" "next" "when"] @keyword.window_end_condition) 
  (_ 
    [
    current_item: (variable) @variable.current
@@ -167,59 +169,63 @@ computed_constructor: (_ .
 (arrow_function) @function
 ; 3.21 Validate Expressions TODO?
 ; 3.22 Extension Expressions TODO?
-;4 Modules and Prologs 
-;4.1 Version Declaration 
-(version_declaration ["version" "encoding"] @keyword.version ) @define.version
-; 4.2 Module Declaration 
-(module_declaration) @define.module
+;4 Modules and Prologs
+; Prolog keywords that wrap whole declarations used nvim/emacs @define/@include
+; names Zed themes do not style. Capture the keywords themselves instead.
+"xquery" @keyword
+"declare" @keyword
+"import" @keyword.import
+;4.1 Version Declaration
+(version_declaration ["version" "encoding"] @keyword)
+; 4.2 Module Declaration
+(module_declaration "module" @keyword)
 ; 4.3 Boundary-space Declaration
-(boundary_space_declaration "boundary-space" @keyword [ "preserve" "strip"] @keyword) @define.boundary_space
-; 4.4 Default Collation Declaratiodefault_collation_declarationn
-(default_collation_declaration "default" @keyword "collation" @keyword) @define.default_collation
+(boundary_space_declaration "boundary-space" @keyword [ "preserve" "strip"] @keyword)
+; 4.4 Default Collation Declaration
+(default_collation_declaration "default" @keyword "collation" @keyword)
 ; 4.5 Base URI Declaration
-(base_uri_declaration "base-uri" @keyword ) @define.base_uri
+(base_uri_declaration "base-uri" @keyword )
 ; 4.6 Construction Declaration
-(construction_declaration "construction"  @keyword . ["strip" "preserve" ] @keyword) @define.construction
-; 4.7 Ordering Mode Declaration 
-(ordering_mode_declaration "ordering"  @keyword . ["ordered" "unordered"]	@keyword) @define.ordering_mode
+(construction_declaration "construction"  @keyword . ["strip" "preserve" ] @keyword)
+; 4.7 Ordering Mode Declaration
+(ordering_mode_declaration "ordering"  @keyword . ["ordered" "unordered"]	@keyword)
 ; 4.8 Empty Order Declaration
-(empty_order_declaration "default" @keyword . "order" @keyword . "empty" @keyword . ["greatest"  "least" ] @keyword) @define.empty_order
+(empty_order_declaration "default" @keyword . "order" @keyword . "empty" @keyword . ["greatest"  "least" ] @keyword)
 ; 4.9 Copy-Namespaces Declaration
-(copy_namespaces_declaration "copy-namespaces" @keyword . ["preserve"  "no-preserve"] @keyword . ["inherit"  "no-inherit"] @keyword) @define.copy_namespaces
-; 4.10 Decimal Format Declaration 
-(decimal_format_declaration "decimal-format" @keyword.decimal_format) @define.decimal_format
+(copy_namespaces_declaration "copy-namespaces" @keyword . ["preserve"  "no-preserve"] @keyword . ["inherit"  "no-inherit"] @keyword)
+; 4.10 Decimal Format Declaration
+(decimal_format_declaration "decimal-format" @keyword.decimal_format)
 (df_property_define _ @keyword.df_property "=" @operator.df_property)
-; 4.11 Schema Import 
-(schema_import  "schema" @keyword.schema_import ) @include.schema_import
+; 4.11 Schema Import
+(schema_import  "schema" @keyword.import)
 (schema_prefix "default" "element" "namespace" ) @keyword.schema_prefix
-; 4.12 Module Import 
-(module_import "module" @keyword ) @include.module_import.
+; 4.12 Module Import
+(module_import "module" @keyword.import)
 ; 4.13 Namespace Declaration
-(namespace_declaration) @define.namespace_declaration 
+(namespace_declaration "namespace" @keyword)
 ;4.14 Default Namespace Declaration
-(default_namespace_declaration "default"  @keyword [ "element"  "function" ] @keyword "namespace" @keyword) @define.default_namespace
+(default_namespace_declaration "default"  @keyword [ "element"  "function" ] @keyword "namespace" @keyword)
 ; 4.15 Annotations
-;4.16 Variable Declaration 
-(variable_declaration ((annotation) @variable.annotation)? "variable" @keyword) @define.variable
+;4.16 Variable Declaration
+(variable_declaration ((annotation) @variable.annotation)? "variable" @keyword)
 ; 4.17 Context Item Declaration
-(context_item_declaration "context" @keyword "item" @keyword) @define.context_item
-; 4.18 Function Declaration 
-(function_declaration ((annotation) @function.annotation)? "function" @keyword 
-                      "(" @punctuation.bracket ")" @punctuation.bracket) @define.function
+(context_item_declaration "context" @keyword "item" @keyword)
+; 4.18 Function Declaration
+(function_declaration ((annotation) @function.annotation)? "function" @keyword
+                      "(" @punctuation.bracket ")" @punctuation.bracket)
 ; 33 ref by:  FunctionDecl InlineFunctionExpr
-(param_list) @parameter.param_list
+(param_list) @variable.parameter
 ; defaults in EQNames
 ":" @punctuation.delimiter.QName
-prefixed: (identifier) @namespace.QName.prefixed
+prefixed: (identifier) @type
 ; assigning values token:  ContextItemDecl VarDecl GroupingSpec LetBinding
 ":=" @operator.assignment
 ; ref ContextItemDecl VarDecl FunctionDecl
-"external" @import.external
+"external" @keyword
 ; namespace define pattern in declarations
-(_ "namespace"  @keyword (identifier) @namespace "=" @operator.namespace_assignment)
+(_ "namespace"  @keyword (identifier) @type "=" @operator.namespace_assignment)
 ; end of declaration delimiter
 (_ ";" @punctuation.delimiter.declaration_separator .)
 ;4.2 Module Declaration
 "," @punctuation.delimiter
 (comment) @comment
-(ERROR) @error
