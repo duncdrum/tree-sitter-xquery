@@ -117,8 +117,10 @@ computed_constructor: (_ .
 ; 3.12 FLWOR Expressions TODO
 (tumbling_window_clause . "for" "tumbling" "window" "in" ) @keyword.tumbling_window_clause
 (sliding_window_clause . "for" "sliding" "window" "in" )  @keyword.sliding_window_clause 
-(window_start_condition "start" "at""previous" "next" "when"  @keyword.window_start_condition ) 
-(window_end_condition "end" "at" "previous" "next" "when" @keyword.window_end_condition) 
+; at/previous/next (and end's "only") are optional in the grammar, so
+; list them as alternatives rather than a required consecutive sequence.
+(window_start_condition ["start" "at" "previous" "next" "when"] @keyword.window_start_condition)
+(window_end_condition ["only" "end" "at" "previous" "next" "when"] @keyword.window_end_condition) 
  (_ 
    [
    current_item: (variable) @variable.current
@@ -193,7 +195,7 @@ computed_constructor: (_ .
 (schema_import  "schema" @keyword.schema_import ) @include.schema_import
 (schema_prefix "default" "element" "namespace" ) @keyword.schema_prefix
 ; 4.12 Module Import 
-(module_import "module" @keyword ) @include.module_import.
+(module_import "module" @keyword ) @include.module_import
 ; 4.13 Namespace Declaration
 (namespace_declaration) @define.namespace_declaration 
 ;4.14 Default Namespace Declaration
