@@ -1,15 +1,25 @@
-bin
+# Build outputs
+bin/
 build/
 target/
-node_modules
+node_modules/
+prebuilds/
+*.node
+/tree-sitter-xquery.wasm
+
+# npm (this repo uses yarn)
+package-lock.json
+
+# Scratch
+temp/
+tmp/
 *.log
 log.html
-/tree-sitter-xquery.wasm
-temp
-tmp
-.git
-package-lock.json
 .DS_Store
+
+# Local tooling — not part of the grammar
 .claude/
 .moderne/
 .zed/
+.codacy/
+.cursor/
