@@ -46,8 +46,8 @@ XQuery tree-sitter in action.
 
 ## Building
 
-Both Make and Yarn are required to use this repo, so you will need to install both.
-Clone and `cd` into this repo then run `make install` which will use Yarn to install the tree-sitter cli.
+Both Make and Node/npm are required to use this repo.
+Clone and `cd` into this repo then run `make install` which will use npm to install dependencies, including the tree-sitter CLI.
 
 
  All the work is done in the `grammar.js` file

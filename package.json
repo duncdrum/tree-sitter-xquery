@@ -30,7 +30,7 @@
     "test:queries": "node --test test/queries/*_test.js",
     "parse": "tree-sitter parse",
     "highlight": "tree-sitter query --captures queries/highlights.scm",
-    "build": "yarn generate && node-gyp-build",
+    "build": "npm run generate && node-gyp-build",
     "build-wasm": "tree-sitter build --wasm",
     "web": "tree-sitter playground",
     "tags": "tree-sitter tags"

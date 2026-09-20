@@ -10,9 +10,6 @@ prebuilds/
 # docs/ (playground shell, web-tree-sitter runtime) is checked in and static.
 /docs/tree-sitter-xquery.wasm
 
-# npm (this repo uses yarn)
-package-lock.json
-
 # Scratch
 temp/
 tmp/
