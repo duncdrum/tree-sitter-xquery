@@ -1,3 +1,24 @@
+:root {
+  --bg: #ffffff;
+  --fg: #040404;
+  --border: #aaa;
+  --highlight-bg: #d9d9d9;
+  --accent-red: red;
+  --banner-bg: #6b3fa0;
+  --banner-fg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1e1e;
+    --fg: #e6e6e6;
+    --border: #444;
+    --highlight-bg: #3a3a3a;
+    --accent-red: #ff6b6b;
+    --banner-bg: #4a2d73;
+  }
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -7,18 +28,22 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--fg);
 }
 
 #fork-banner {
   flex: none;
-  background: #6b3fa0;
-  color: #fff;
-  font: 12px/28px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--banner-bg);
+  color: var(--banner-fg);
+  font-size: 12px;
+  line-height: 28px;
   text-align: center;
 }
 
 #fork-banner a {
-  color: #fff;
+  color: var(--banner-fg);
 }
 
 #playground-container {
@@ -34,7 +59,7 @@ header {
   display: flex;
   padding: 20px;
   height: 60px;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid var(--border);
 }
 
 main {
@@ -57,8 +82,8 @@ main {
   flex: 1;
   position: relative;
   overflow: hidden;
-  border-right: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 #output-container-scroll {
@@ -67,6 +92,22 @@ main {
   left: 50%;
   bottom: 0;
   right: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+/* Below this width the 50/50 side-by-side split is too cramped to use;
+   stack the source and the tree output instead. */
+@media (max-width: 700px) {
+  #input-pane {
+    right: 0;
+    bottom: 50%;
+  }
+
+  #output-container-scroll {
+    left: 0;
+    top: 50%;
+  }
 }
 
 .header-item {
@@ -82,12 +123,6 @@ main {
   height: 100%;
 }
 
-#output-container-scroll {
-  flex: 1;
-  padding: 0;
-  overflow: auto;
-}
-
 #output-container {
   padding: 0 10px;
   margin: 0;
@@ -98,12 +133,12 @@ main {
 }
 
 .CodeMirror div.CodeMirror-cursor {
-  border-left: 3px solid red;
+  border-left: 3px solid var(--accent-red);
 }
 
 a {
   text-decoration: none;
-  color: #040404;
+  color: var(--fg);
   padding: 2px;
 }
 
@@ -112,13 +147,12 @@ a:hover {
 }
 
 a.highlighted {
-  background-color: #d9d9d9;
-  color: red;
+  background-color: var(--highlight-bg);
+  color: var(--accent-red);
   border-radius: 3px;
   text-decoration: underline;
 }
 
 .query-error {
-  text-decoration: underline red dashed;
-  -webkit-text-decoration: underline red dashed;
+  text-decoration: underline var(--accent-red) dashed;
 }

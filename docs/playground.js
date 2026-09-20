@@ -37,16 +37,21 @@ let tree;
   await Parser.init();
 
   const parser = new Parser();
+  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'material-darker'
+    : 'default';
   const codeEditor = CodeMirror.fromTextArea(codeInput, {
     lineNumbers: true,
     showCursorWhenSelecting: true,
-    tabSize: 2
+    tabSize: 2,
+    theme
   });
 
   const queryEditor = CodeMirror.fromTextArea(queryInput, {
     lineNumbers: true,
     showCursorWhenSelecting: true,
-    tabSize: 2
+    tabSize: 2,
+    theme
   });
 
   const cluster = new Clusterize({
