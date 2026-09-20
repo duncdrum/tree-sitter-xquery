@@ -1,0 +1,30 @@
+.github/workflows/pages.yml
+  s_115b7ea8cfb1b9::t_73259644b544a8 35-36,46-53
+  s_115b7ea8cfb1b9::t_d97e420b1298b0 54
+.gitignore
+  s_115b7ea8cfb1b9::t_00bb47677de434 9-13,15-16
+docs/playground.js
+  s_115b7ea8cfb1b9::t_800e09e8b084b8 1-2
+  s_115b7ea8cfb1b9::t_ec8f89624bd7a8 39,41
+  s_115b7ea8cfb1b9::t_e6be051c0c17fb 92
+Makefile
+  s_115b7ea8cfb1b9::t_83f52136676560 54-55
+docs/index.html
+  s_115b7ea8cfb1b9::t_6d41f19462864e 307
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "c9c392f9da5e94df740f8f157c32dd2f3870409f",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
