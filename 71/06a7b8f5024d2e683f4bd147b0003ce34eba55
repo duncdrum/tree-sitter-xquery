@@ -1,0 +1,29 @@
+docs/playground.css
+  s_115b7ea8cfb1b9::t_fa8693fee5ac00 1-2,7-23,26-27
+docs/index.html
+  s_115b7ea8cfb1b9::t_66d095582723cf 302
+  s_115b7ea8cfb1b9::t_7ea968fa999dad 32-36
+  s_115b7ea8cfb1b9::t_6ea9de796505f2 5
+  s_115b7ea8cfb1b9::t_2afc77aedf20a5 8,301
+  s_115b7ea8cfb1b9::t_02ab1cbe267e3e 12
+docs/playground.js
+  s_115b7ea8cfb1b9::t_0a703baf4f97e4 344,346
+  s_115b7ea8cfb1b9::t_685b39c38b253f 222-225
+  s_115b7ea8cfb1b9::t_51df76d9f88956 180
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7106a7b8f5024d2e683f4bd147b0003ce34eba55",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": null
+    }
+  }
+}
