@@ -1,0 +1,26 @@
+Makefile
+  s_115b7ea8cfb1b9::t_686d070d84d8bb 118
+grammar.js
+  s_115b7ea8cfb1b9::t_2145eb80406c09 82,105,108,127,139,173,198,209,238-239,248-249,311,321-322,349-350,384,403-404,596,598-599
+  s_115b7ea8cfb1b9::t_a14ec1f228ed02 434,458,605
+package.json
+  s_115b7ea8cfb1b9::t_302ecc59442f28 43,56-59
+package-lock.json
+  s_115b7ea8cfb1b9::t_49da23e65ad54e 17,47-49,53,56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "abe1a91cccec9f571b3a7f97960989d4b284f053",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
