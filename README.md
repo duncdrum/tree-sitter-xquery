@@ -15,14 +15,17 @@
 > |---|---|
 > | `main` | upstream, plus Wolfgang Meier's comment-lexing fix |
 > | `fork/wolfgangmm` | [wolfgangmm](https://github.com/wolfgangmm/tree-sitter-xquery), merged into main |
-> | `fork/mrleepee` | [mrleepee](https://github.com/mrleepee/tree-sitter-xquery), unmerged, under review |
+> | `fork/mrleepee` | [mrleepee](https://github.com/mrleepee/tree-sitter-xquery), reviewed per commit |
 >
-> `fork/mrleepee` adds `queries/tags.scm` and grammar review fixes that look worth
-> taking, plus MarkLogic JSON node constructors that probably do not belong in a
-> vendor-neutral grammar. Reviewed per commit, not merged wholesale.
+> `fork/mrleepee` has three commits. Its vendor-neutral contribution
+> (`queries/tags.scm`) was adapted into main independently (`67fd25b`, refined in
+> `3899904`) rather than merged verbatim. The other two are MarkLogic-specific
+> throughout — JSON node constructors, `declare private function`/`variable`
+> shorthand, MarkLogic reserved words usable as identifiers — and were deliberately
+> not taken, since this grammar targets the vendor-neutral W3C dialect.
 >
-> Planned here: an external scanner for direct element constructors, XQuery 4.0, and
-> the query files Zed needs.
+> Planned here: XQuery 4.0. The external scanner (direct element/string-constructor
+> mode switching) and the query files Zed needs are already in place.
 
 # A tree-sitter for XQuery
 
