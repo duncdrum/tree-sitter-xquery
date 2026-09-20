@@ -1,7 +1,5 @@
 {
-  "parser-directories": [
-    "/home/grantmacken/projects/grantmacken"
-  ],
+  "parser-directories": [],
   "theme": {
     "type.builtin": {
       "bold": true,

@@ -2,13 +2,12 @@
 >
 > This is a fork of [grantmacken/tree-sitter-xquery](https://github.com/grantmacken/tree-sitter-xquery)
 > by Grant MacKenzie, MIT licensed. All grammar work through June 2023 is his.
+> Grant was contacted about reviving the upstream repository directly; this fork
+> continues independently instead.
 >
 > It is maintained here to support [xquery-rs](https://github.com/duncdrum/xquery-rs),
 > a Rust XQuery language server, and a Zed editor extension. Zed pins a grammar by
 > repository and revision, which is why a separately controlled repository is needed.
->
-> **Private for now. This repository must become public before the Zed extension can
-> ship**, because Zed clones the grammar at build time.
 >
 > Branches:
 >
@@ -42,7 +41,7 @@ a syntax highlighting.
 
 ## A tree-sitter web playground 
 
-Visit the interactive treesitter web [playground](https://grantmacken.github.io/tree-sitter-xquery) to see the 
+Visit the interactive treesitter web [playground](https://duncdrum.github.io/tree-sitter-xquery) to see the 
 XQuery tree-sitter in action.
 
 ## Building
@@ -111,7 +110,7 @@ Note: This list is incomplete
 <!-- 3. `make query-all` The query capture S-expressions **should not** error -->
 <!-- 2. `make test-all` All tree-sitter tests in the test/corpus **should not** error -->
 
-Tests are run via [GitHub actions](https://github.com/grantmacken/tree-sitter-xQuery/actions)
+Tests are run via [GitHub actions](https://github.com/duncdrum/tree-sitter-xquery/actions)
 
 The parsing examples that are derived from the [W3C xQuery recommendation](https://www.w3.org/TR/xquery-31)
 are found in the 'examples/spec' folder. Other parse examples are from the [qt3tests suite](https://github.com/w3c/qt3tests) and are in the examples/qt3tests folder
@@ -122,7 +121,7 @@ The `test/corpus/` tree-sitter tests are mainly organised around the sections ou
 -->
 
 To peek at tree-sitter highlight captures in action, I run some query examples in 
-[GitHub actions](https://github.com/grantmacken/tree-sitter-xQuery/actions), 
+[GitHub actions](https://github.com/duncdrum/tree-sitter-xquery/actions), 
 which you might want to look at. 
 
 ## using tree-sitter with neovim
@@ -138,7 +137,7 @@ to use the xquery treesitter
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 parser_config.xquery = {
   install_info = {
-    url = "~/projects/grantmacken/tree-sitter-xquery", -- where you have cloned this project
+    url = "~/projects/duncdrum/tree-sitter-xquery", -- where you have cloned this project
     files = {"src/parser.c"}
   }
 }
@@ -166,6 +165,6 @@ More spot the semantic color differences
 ## Contributing, Discussions and Issues
 
 [Contributions](CONTRIBUTING.md) and suggestions in form of 
-[issues](https://github.com/grantmacken/tree-sitter-xquery/issues) are welcome.
+[issues](https://github.com/duncdrum/tree-sitter-xquery/issues) are welcome.
 
 

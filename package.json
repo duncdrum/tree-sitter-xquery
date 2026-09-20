@@ -3,6 +3,9 @@
   "description": "XQuery tree-sitter",
   "version": "0.1.2",
   "author": "Grant Mackenzie <grantmacken@gmail.com>",
+  "contributors": [
+    "Duncan Paterson <d.paterson@me.com>"
+  ],
   "license": "MIT",
   "keywords": [
     "XQuery",
