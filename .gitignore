@@ -6,9 +6,14 @@ node_modules/
 prebuilds/
 *.node
 /tree-sitter-xquery.wasm
-# Rebuilt fresh by .github/workflows/pages.yml on every deploy; the rest of
-# docs/ (playground shell, web-tree-sitter runtime) is checked in and static.
+# Rebuilt fresh by .github/workflows/pages.yml on every deploy, from
+# whatever tree-sitter-cli/web-tree-sitter versions package.json pins — a
+# stale runtime paired with a freshly built grammar wasm can hard-fail to
+# load (different wasm ABI/dynamic-linking format). The rest of docs/
+# (playground shell) is checked in and static.
 /docs/tree-sitter-xquery.wasm
+/docs/web-tree-sitter.js
+/docs/web-tree-sitter.wasm
 
 # Scratch
 temp/

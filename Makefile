@@ -51,9 +51,8 @@ tree-sitter-xquery.wasm: buildr
 docs: tree-sitter-xquery.wasm ## refresh the local playground copy (CI deploys docs/ to GitHub Pages on push to main)
 	mkdir -p docs
 	cp -v $< docs/
-	cp -v node_modules/web-tree-sitter/tree-sitter.wasm docs/
-	cp -v node_modules/web-tree-sitter/tree-sitter.js docs/
-	cp -v node_modules/web-tree-sitter/tree-sitter-web.d.ts docs/
+	cp -v node_modules/web-tree-sitter/web-tree-sitter.wasm docs/
+	cp -v node_modules/web-tree-sitter/web-tree-sitter.js docs/
 
 .PHONY: docs-clean
 docs-clean:

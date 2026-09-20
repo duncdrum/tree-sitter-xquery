@@ -1,3 +1,5 @@
+import { Parser, Language } from './web-tree-sitter.js';
+
 let tree;
 
 (async () => {
@@ -34,9 +36,9 @@ let tree;
 
   loadState();
 
-  await TreeSitter.init();
+  await Parser.init();
 
-  const parser = new TreeSitter();
+  const parser = new Parser();
   const codeEditor = CodeMirror.fromTextArea(codeInput, {
     lineNumbers: true,
     showCursorWhenSelecting: true,
@@ -87,7 +89,7 @@ let tree;
       const url = 'tree-sitter-xquery.wasm'
       languageSelect.disabled = true;
       try {
-        languagesByName[newLanguageName] = await TreeSitter.Language.load(url);
+        languagesByName[newLanguageName] = await Language.load(url);
       } catch (e) {
         console.error(e);
         languageSelect.value = languageName;

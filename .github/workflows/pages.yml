@@ -11,9 +11,6 @@ on:
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
-env:
-  TREE_SITTER_VERSION: "0.27.0"
-
 permissions:
   contents: read
   pages: write
@@ -35,8 +32,8 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install tree-sitter CLI
-        run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
+      - name: Install dependencies
+        run: npm ci
 
       - name: Generate parser
         run: npx tree-sitter generate
@@ -45,6 +42,15 @@ jobs:
         # tree-sitter-cli fetches its own wasi-sdk toolchain, no
         # Emscripten/Docker setup needed.
         run: npx tree-sitter build --wasm -o docs/tree-sitter-xquery.wasm
+
+      - name: Copy the web-tree-sitter runtime
+        # Keeps the runtime in lockstep with whatever web-tree-sitter
+        # version package.json pins, alongside the freshly built grammar
+        # wasm above — see the .gitignore comment for why these can't be
+        # a static, hand-committed snapshot.
+        run: |
+          cp node_modules/web-tree-sitter/web-tree-sitter.js docs/
+          cp node_modules/web-tree-sitter/web-tree-sitter.wasm docs/
 
       - uses: actions/configure-pages@v6
 
