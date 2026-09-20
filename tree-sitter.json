@@ -4,10 +4,13 @@
     {
       "name": "xquery",
       "camelcase": "XQuery",
+      "title": "XQuery",
       "scope": "source.xquery",
       "path": ".",
       "file-types": ["xquery", "xqm", "xq", "xql"],
+      "injection-regex": "^xquery$",
       "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm",
       "tags": "queries/tags.scm"
     }
   ],
