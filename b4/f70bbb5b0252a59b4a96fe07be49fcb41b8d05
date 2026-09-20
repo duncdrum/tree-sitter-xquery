@@ -1,0 +1,24 @@
+docs/playground.js
+  s_115b7ea8cfb1b9::t_d3ecde6f9ca6b7 40-42,46-47,53-54
+docs/playground.css
+  s_115b7ea8cfb1b9::t_8089f86a695875 1-21,31-33,38-41,46,62,85-86,95-110,136,141,150-151,157
+docs/index.html
+  s_115b7ea8cfb1b9::t_73cac416ddb57c 12-14
+  s_115b7ea8cfb1b9::t_a30d4145f75470 10-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "b4f70bbb5b0252a59b4a96fe07be49fcb41b8d05",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
