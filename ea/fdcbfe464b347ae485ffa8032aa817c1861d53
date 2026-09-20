@@ -1,0 +1,19 @@
+CONTRIBUTING.md
+  s_115b7ea8cfb1b9::t_56255b2e9f4bcf 6,8-15,17,19-21,23,25,27-28,30,32-36,38,42,46-56,62,66,68,71,74-76,78,80-83,85,87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "eafdcbfe464b347ae485ffa8032aa817c1861d53",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
