@@ -5,9 +5,10 @@
 > Grant was contacted about reviving the upstream repository directly; this fork
 > continues independently instead.
 >
-> It is maintained here to support [xquery-rs](https://github.com/duncdrum/xquery-rs),
-> a Rust XQuery language server, and a Zed editor extension. Zed pins a grammar by
-> repository and revision, which is why a separately controlled repository is needed.
+> It is maintained here to support other tooling. Editors typically pin a
+> tree-sitter grammar by repository and revision, which is why the grammar needs
+> its own separately controlled repository rather than living inside a larger
+> project.
 >
 > Branches:
 >
