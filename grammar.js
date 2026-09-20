@@ -79,7 +79,7 @@ module.exports = grammar({
         $.ordering_mode_declaration, // 13
         $.empty_order_declaration, // 14
         $.copy_namespaces_declaration, // 15
-        $.decimal_format_declaration // 18
+        $.decimal_format_declaration, // 18
       ), // 8
     boundary_space_declaration: ($) => seq('declare', 'boundary-space', choice('preserve', 'strip')),
     default_collation_declaration: ($) => seq('declare', 'default', 'collation', field('uri', $.string_literal)),
@@ -102,10 +102,10 @@ module.exports = grammar({
           'zero-digit',
           'digit',
           'pattern-separator',
-          'exponent-separator'
+          'exponent-separator',
         ),
         '=',
-        $.string_literal
+        $.string_literal,
       ),
     //choice(seq('decimal-format', field('name', $._EQName)), seq('default', 'decimal-format')), repeat(seq($._df_property_name, '=', $.string_literal))),
     schema_import: ($) =>
@@ -124,7 +124,7 @@ module.exports = grammar({
         'variable',
         $.variable,
         optional($.type_declaration),
-        choice(seq(':=', field('value', $._expr_single)), seq('external', optional(seq(':=', $._expr_single))))
+        choice(seq(':=', field('value', $._expr_single)), seq('external', optional(seq(':=', $._expr_single)))),
       ), // 28
     function_declaration: ($) =>
       seq(
@@ -136,7 +136,7 @@ module.exports = grammar({
         optional($.param_list),
         ')',
         optional(field('return_type', $.type_declaration)),
-        field('body', choice($.enclosed_expr, 'external'))
+        field('body', choice($.enclosed_expr, 'external')),
       ), // 32
     param_list: ($) => seq($._param, repeat(seq(',', $._param))), // 33
     _param: ($) => seq('$', $._EQName, optional(field('param_type', $.type_declaration))), // 34
@@ -170,7 +170,7 @@ module.exports = grammar({
         seq($._postfix_expr, optional($.absolute_path_expr)),
         $.absolute_path_expr,
         $.rel_path_expr,
-        $._primary_expr
+        $._primary_expr,
         //$.qname
       ),
     flwor_expr: ($) => prec(2, seq($._initial_clause, repeat($._intermediate_clause), $.return_clause)), // 41
@@ -195,7 +195,7 @@ module.exports = grammar({
         optional(seq('previous', field('previous_item', $.variable))),
         optional(seq('next', field('next_item', $.variable))),
         'when',
-        $._expr_single
+        $._expr_single,
       ),
     window_end_condition: ($) =>
       seq(
@@ -206,7 +206,7 @@ module.exports = grammar({
         optional(seq('previous', field('previous_item', $.variable))),
         optional(seq('next', field('next_item', $.variable))),
         'when',
-        $._expr_single
+        $._expr_single,
       ),
     _positional_var: ($) => seq('at', field('positional_variable', $.variable)),
     current_item: ($) => seq('$', $._EQName),
@@ -235,8 +235,8 @@ module.exports = grammar({
           'in',
           field('in_binding', seq($._expr_single, repeat(seq(',', $.variable, optional($.type_declaration), 'in', $._expr_single)))),
           'satisfies',
-          field('satisfy_conditional', $._expr_single)
-        )
+          field('satisfy_conditional', $._expr_single),
+        ),
       ), // 70
     switch_expr: ($) =>
       prec(
@@ -245,8 +245,8 @@ module.exports = grammar({
           'switch',
           field('switch_operand', seq('(', $._expr, ')')),
           repeat1($.switch_clause),
-          field('switch_default', seq('default', 'return', field('default_return', $._expr_single)))
-        )
+          field('switch_default', seq('default', 'return', field('default_return', $._expr_single))),
+        ),
       ), // 71
     switch_clause: ($) => seq(repeat1(seq('case', field('case_operand', $._expr_single))), 'return', field('case_return', $._expr_single)), // 72
     typeswitch_expr: ($) =>
@@ -308,7 +308,7 @@ module.exports = grammar({
         $._node_constructor, // 140 node constructors 140
         $._func_constructors,
         field('constructor', $.string_constructor), // 177
-        $.unary_lookup // 181
+        $.unary_lookup, // 181
       ),
     _node_constructor: ($) => choice($.direct_constructor, $._computed_constructor), //140
     _func_constructors: ($) =>
@@ -318,8 +318,8 @@ module.exports = grammar({
           $.function_item_expr, // 167
           $.map_constructor, // 170
           $.square_array_constructor, // 175 array_constructor 174
-          $.curly_array_constructor // 176  array_constructor 174
-        )
+          $.curly_array_constructor, // 176  array_constructor 174
+        ),
       ),
     direct_constructor: ($) => choice($.direct_element, $.direct_comment, $.direct_pi), //141
     direct_comment: ($) => seq('<!--', optional(field('content', alias($._direct_comment_text, $.comment_content))), '-->'), // 149
@@ -346,8 +346,8 @@ module.exports = grammar({
           $.comp_namespace_constructor, // 160
           $.comp_text_constructor, // 164
           $.comp_comment_constructor, // 165
-          $.comp_pi_constructor // 166
-        )
+          $.comp_pi_constructor, // 166
+        ),
       ), // 155
     comp_doc_constructor: ($) => seq('document', field('content', $.enclosed_expr)), // 156
     comp_elem_constructor: ($) => prec.left(2, seq('element', $._construct)), //157
@@ -381,7 +381,7 @@ module.exports = grammar({
         $.any_item,
         $._func_test, // maps arrays are functions
         $.atomic_or_union_type,
-        $.parenthesized_item_type // 216
+        $.parenthesized_item_type, // 216
       ), // 186
     occurrence_indicator: ($) => choice('?', '*', '+'), // 185
     atomic_or_union_type: ($) => $._EQName, // 187
@@ -400,8 +400,8 @@ module.exports = grammar({
           $.any_kind_test,
           $.comment_test,
           $.namespace_node_test,
-          $.text_test
-        )
+          $.text_test,
+        ),
       ),
     any_kind_test: ($) => seq('node', token.immediate('('), ')'), // 189
     text_test: ($) => seq('text', token.immediate('('), ')'), // 191
@@ -431,8 +431,7 @@ module.exports = grammar({
     map_entry: ($) => seq(field('key', $._expr_single), ':', field('value', $._expr_single)),
     curly_array_constructor: ($) => seq('array', field('content', $.enclosed_expr)),
     square_array_constructor: ($) => seq('[', optional($._expr_single), repeat(seq(',', $._expr_single)), ']'),
-    string_constructor: ($) =>
-      seq('``[', optional($.string_constructor_chars), repeat(seq($.interpolation, optional($.string_constructor_chars))), ']``'), // 177
+    string_constructor: ($) => seq('``[', optional($.string_constructor_chars), repeat(seq($.interpolation, optional($.string_constructor_chars))), ']``'), // 177
     string_constructor_chars: ($) => $._string_constructor_chars_text,
     interpolation: ($) => seq('`{', $._expr, '}`'), // 180',
     string_literal: ($) => choice($._string_quote, $._string_apos),
@@ -456,11 +455,7 @@ module.exports = grammar({
     // 18 reserved words can't be used unprefixed. fn:if() and $Q{...}if()
     // are still fine since only the bare ncname branch is restricted.
     _function_name: ($) =>
-      choice(
-        field('ncname', reserved('function_name', $._ncname)),
-        seq(field('prefixed', $._ncname), token.immediate(':'), field('local', $._ncname)),
-        $.uri_qualified_name
-      ),
+      choice(field('ncname', reserved('function_name', $._ncname)), seq(field('prefixed', $._ncname), token.immediate(':'), field('local', $._ncname)), $.uri_qualified_name),
     //_QName: ($) => choice(field('unprefixed', $.identifier), seq(field('prefix', $.identifier), token.immediate(':'), field('local', $.identifier))),
     //_allowed_qnames: $  => prec.right(seq( $._ncname, optional(seq(':', $._ncname)))),
     _allowed_qnames: ($) => choice(field('ncname', $._ncname), seq(field('prefixed', $._ncname), token.immediate(':'), field('local', $._ncname))),
@@ -598,20 +593,15 @@ module.exports = grammar({
             'where',
             'window',
             'xquery',
-            'zero-digit'
+            'zero-digit',
           ),
-          $.identifier
-        )
+          $.identifier,
+        ),
       ),
     char_data: ($) => /[^\p{C}]/,
     // ^\p{C}  no invisible control characters and unused code points
 
     identifier: ($) => /[_\p{XID_Start}][-_\p{XID_Continue}]*/,
-    comment: ($) =>
-      seq(
-        '(:',
-        repeat1(choice($.comment, '(', ')', prec.right(/[^:():]|[:][^)]/))),
-        token.immediate(':)')
-      ),
+    comment: ($) => seq('(:', repeat1(choice($.comment, '(', ')', prec.right(/[^:():]|[:][^)]/))), token.immediate(':)')),
   },
 });

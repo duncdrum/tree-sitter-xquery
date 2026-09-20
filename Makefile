@@ -115,4 +115,4 @@ install: ## install dependencies
 .PHONY: format
 format:  grammar.js
 	#prettier --list-different grammar.js
-	./node_modules/.bin/prettier  --write --no-config --no-editorconfig --single-quote --print-width 180  grammar.js
+	./node_modules/.bin/prettier --write --no-config --no-editorconfig --single-quote --print-width 180 grammar.js

@@ -40,7 +40,7 @@
     "node-gyp-build": "^4.8.4"
   },
   "devDependencies": {
-    "prettier": "^2.8.7",
+    "prettier": "^3.9.8",
     "tree-sitter": "^0.25.1",
     "tree-sitter-cli": "^0.27.0",
     "web-tree-sitter": "^0.27.0"
@@ -53,7 +53,10 @@
     {
       "scope": "source.xquery",
       "file-types": [
-        "xquery", "xqm", "xq", "xql"
+        "xquery",
+        "xqm",
+        "xq",
+        "xql"
       ]
     }
   ]
