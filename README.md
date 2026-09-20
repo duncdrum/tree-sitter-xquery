@@ -108,25 +108,23 @@ Note: This list is incomplete
  - [x]  `item`  in prolog declarations 'context item declarations'
  - [x]  `item`  in any item test
 
-## Testing Goals: <!--1, 2  TODO , 3 -->
+## Testing Goals
 
-1. `make parse-all` The parser **SHOULD NOT** throw a parse error with any **valid** XQuery module text.
-<!-- 3. `make query-all` The query capture S-expressions **should not** error -->
-<!-- 2. `make test-all` All tree-sitter tests in the test/corpus **should not** error -->
+1. `make parse-all` — the parser **SHOULD NOT** throw a parse error on any **valid** XQuery module.
+2. `make test-all` — all tree-sitter tests in `test/corpus/` **should not** error.
+3. Query files are checked in CI (and via `npm run test:queries` locally) against the grammar and real fixtures, catching a capture that references a nonexistent node or field, or a pattern that silently matches nothing.
 
 Tests are run via [GitHub actions](https://github.com/duncdrum/tree-sitter-xquery/actions)
 
 The parsing examples that are derived from the [W3C xQuery recommendation](https://www.w3.org/TR/xquery-31)
-are found in the 'examples/spec' folder. Other parse examples are from the [qt3tests suite](https://github.com/w3c/qt3tests) and are in the examples/qt3tests folder
+are found in the `examples/spec` folder. Other parse examples are from the [qt3tests suite](https://github.com/w3c/qt3tests) and are in the `examples/qt3` folder.
 
-<!-- TODO
-The `test/corpus/` tree-sitter tests are mainly organised around the sections outlined in the 
-[W3C xQuery recommendation](https://www.w3.org/TR/xquery-31).
--->
+The `test/corpus/` tree-sitter tests are organised around the sections outlined in the
+[W3C xQuery recommendation](https://www.w3.org/TR/xquery-31) (`primary.txt`, `postfix.txt`,
+`xPath.txt`, `flwor.txt`, `constructors.txt`, and so on).
 
-To peek at tree-sitter highlight captures in action, I run some query examples in 
-[GitHub actions](https://github.com/duncdrum/tree-sitter-xquery/actions), 
-which you might want to look at. 
+To see highlight captures in action, use the [web playground](https://duncdrum.github.io/tree-sitter-xquery) —
+turn the query panel on and paste in `queries/highlights.scm` to watch captures color the source live.
 
 ## using tree-sitter with neovim
 
