@@ -1,0 +1,16 @@
+package-lock.json
+  h_ff0005bef58c9d 3,9
+package.json
+  h_ff0005bef58c9d 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "344a8d6446d51476f884ed662cb732f587c71001",
+  "prompts": {},
+  "humans": {
+    "h_ff0005bef58c9d": {
+      "author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
