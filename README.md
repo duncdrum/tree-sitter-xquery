@@ -85,28 +85,11 @@ next '$salary' as variable.reference
 ```
 
 
-## An attempt to eliminate semantic token ambiguity
+## Semantic token disambiguation
 
-Note: This list is incomplete
-
-### brackets
-
- - [x]  ` "["  "]" `  predicate in postfix expression
- - [x]  ` "["  "]" `  predicate in axis step
- - [x]  ` "["  "]" `  square array constructor
-
-### keywords
-
- - [x]  `element`  in prolog declarations
- - [x]  `element`  in computed element constructor
- - [x]  `element`  in element kind test   
-
- - [x]  `function`  in prolog declarations 'default namespace declaration' and 'function declaration'
- - [x]  `function`  in inline function expression
- - [x]  `function`  in any function test 
-
- - [x]  `item`  in prolog declarations 'context item declarations'
- - [x]  `item`  in any item test
+The same token or keyword often needs a different highlight capture depending on
+its syntactic role (e.g. `element` in a prolog declaration vs. a computed
+constructor vs. a kind test). Tracked in [#25](https://github.com/duncdrum/tree-sitter-xquery/issues/25), not here.
 
 ## Testing Goals
 
@@ -145,24 +128,6 @@ parser_config.xquery = {
 }
 
 ```
-
-<!--
-
-## better semantic highlighting: example in neovim
-
-![terminal screeshot](assets/2021-09-02_10-56.png)
-
-1. '\*' in the context of sequence_type/any_array_test/wildcard 
-2. '+'  in the context of sequence_type/occurrence
-3. '+'  in the context of additive_expr so colored as an operator
-4. 'xs:date' in this context is a constuctor function so it is colored as a function, whereas elsewhere as the 2nd line 'xs:integer' this appears in the 
-sequence_type context so it will be colored as a type.
-
-More spot the semantic color differences
- - '[' ']' can be a square array constructors or delimit predicates
- - '(' ')' can be a parenthesized expr or delimit parameter and argument lists
-
--->
 
 ## Contributing, Discussions and Issues
 
