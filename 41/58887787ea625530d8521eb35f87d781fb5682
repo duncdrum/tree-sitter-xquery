@@ -1,0 +1,20 @@
+.github/workflows/pages.yml
+  s_115b7ea8cfb1b9::t_1de49d1cceecdf 62
+  s_115b7ea8cfb1b9::t_d47f05c3f13690 49,51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "4158887787ea625530d8521eb35f87d781fb5682",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
