@@ -1,0 +1,26 @@
+package.json
+  s_115b7ea8cfb1b9::t_78b8a68f8129af 33
+Makefile
+  s_115b7ea8cfb1b9::t_f56a221c9a66cc 64
+  s_115b7ea8cfb1b9::t_c42a8729d34a75 10,17-18,23,33,45,48,59,67-68,74,81,86-87,89-91,95,98-101,105,108-109,112-113
+README.md
+  s_115b7ea8cfb1b9::t_9ee257c46739e6 49-50
+package-lock.json
+  s_115b7ea8cfb1b9::t_9bf0d46efaa833 1-96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "2e9153f79432a1de96029dd7cb862f8e7a833976",
+  "prompts": {},
+  "sessions": {
+    "s_115b7ea8cfb1b9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3ef9afe-86b5-4fe0-9b05-e4a0a678aa16",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "duncdrum <d.paterson@me.com>"
+    }
+  }
+}
