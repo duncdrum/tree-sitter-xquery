@@ -8,8 +8,10 @@
   --banner-fg: #ffffff;
 }
 
+/* Follows the OS preference by default; an explicit choice from the
+   theme-toggle button (data-theme) overrides it either way. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #1e1e1e;
     --fg: #e6e6e6;
     --border: #444;
@@ -17,6 +19,15 @@
     --accent-red: #ff6b6b;
     --banner-bg: #4a2d73;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --fg: #e6e6e6;
+  --border: #444;
+  --highlight-bg: #3a3a3a;
+  --accent-red: #ff6b6b;
+  --banner-bg: #4a2d73;
 }
 
 html, body {
@@ -130,6 +141,21 @@ main {
 
 #logging-checkbox {
   vertical-align: middle;
+}
+
+#theme-toggle {
+  font: inherit;
+  font-size: 13px;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+#theme-toggle:hover {
+  background: var(--highlight-bg);
 }
 
 .CodeMirror div.CodeMirror-cursor {

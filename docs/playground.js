@@ -1,10 +1,11 @@
-import { Parser, Language } from './web-tree-sitter.js';
+import { Parser, Language, Query } from './web-tree-sitter.js';
 
 let tree;
 
 (async () => {
   const CAPTURE_REGEX = /@\s*([\w\._-]+)/g;
-  const COLORS_BY_INDEX = [
+  // Tuned for a white editor background.
+  const COLORS_BY_INDEX_LIGHT = [
     'blue',
     'chocolate',
     'darkblue',
@@ -19,6 +20,28 @@ let tree;
     'red',
     'sienna',
   ];
+  // Tuned for the material-darker editor background (~#212121) - the
+  // light-mode palette above is mostly navy/darkgreen/indigo shades that
+  // are illegible or invisible against a dark background.
+  const COLORS_BY_INDEX_DARK = [
+    '#8ab4f8',
+    '#f28b82',
+    '#fdd663',
+    '#81c995',
+    '#d7aefb',
+    '#78d9ec',
+    '#fcad70',
+    '#c58af9',
+    '#a8dab5',
+    '#f6aea9',
+    '#aecbfa',
+    '#fde293',
+    '#ceead6',
+  ];
+  const THEME_KEY = 'themeXQuery';
+  const THEME_CYCLE = ['system', 'light', 'dark'];
+  const THEME_LABELS = { system: '\u{1F313} auto', light: '☀️ light', dark: '\u{1F319} dark' };
+  let COLORS_BY_INDEX = COLORS_BY_INDEX_LIGHT;
 
   const codeInput = document.getElementById('code-input');
   const languageSelect = document.getElementById('language-select');
@@ -30,28 +53,44 @@ let tree;
   const queryContainer = document.getElementById('query-container');
   const queryInput = document.getElementById('query-input');
   const updateTimeSpan = document.getElementById('update-time');
+  const themeToggle = document.getElementById('theme-toggle');
   const languagesByName = {};
 
   loadState();
 
+  function systemPrefersDark() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function getStoredTheme() {
+    return localStorage.getItem(THEME_KEY) || 'system';
+  }
+
+  function isDarkEffective(explicit) {
+    return explicit === 'dark' || (explicit === 'system' && systemPrefersDark());
+  }
+
+  let explicitTheme = getStoredTheme();
+  let isDark = isDarkEffective(explicitTheme);
+  document.documentElement.setAttribute('data-theme', explicitTheme === 'system' ? '' : explicitTheme);
+  COLORS_BY_INDEX = isDark ? COLORS_BY_INDEX_DARK : COLORS_BY_INDEX_LIGHT;
+  themeToggle.textContent = THEME_LABELS[explicitTheme];
+
   await Parser.init();
 
   const parser = new Parser();
-  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'material-darker'
-    : 'default';
   const codeEditor = CodeMirror.fromTextArea(codeInput, {
     lineNumbers: true,
     showCursorWhenSelecting: true,
     tabSize: 2,
-    theme
+    theme: isDark ? 'material-darker' : 'default'
   });
 
   const queryEditor = CodeMirror.fromTextArea(queryInput, {
     lineNumbers: true,
     showCursorWhenSelecting: true,
     tabSize: 2,
-    theme
+    theme: isDark ? 'material-darker' : 'default'
   });
 
   const cluster = new Clusterize({
@@ -80,6 +119,10 @@ let tree;
   queryCheckbox.addEventListener('change', handleQueryEnableChange);
   languageSelect.addEventListener('change', handleLanguageChange);
   outputContainer.addEventListener('click', handleTreeClick);
+  themeToggle.addEventListener('click', handleThemeToggleClick);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (explicitTheme === 'system') applyTheme('system');
+  });
 
   handleQueryEnableChange();
   await handleLanguageChange()
@@ -261,7 +304,7 @@ let tree;
       const queryText = queryEditor.getValue();
 
       try {
-        query = parser.getLanguage().query(queryText);
+        query = new Query(parser.language, queryText);
         let match;
 
         let row = 0;
@@ -392,6 +435,25 @@ let tree;
       queryContainer.style.visibility = 'hidden';
       queryContainer.style.position = 'absolute';
     }
+    handleQueryChange();
+  }
+
+  function handleThemeToggleClick() {
+    const next = THEME_CYCLE[(THEME_CYCLE.indexOf(explicitTheme) + 1) % THEME_CYCLE.length];
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+  }
+
+  function applyTheme(next) {
+    explicitTheme = next;
+    isDark = isDarkEffective(explicitTheme);
+    document.documentElement.setAttribute('data-theme', explicitTheme === 'system' ? '' : explicitTheme);
+    themeToggle.textContent = THEME_LABELS[explicitTheme];
+    COLORS_BY_INDEX = isDark ? COLORS_BY_INDEX_DARK : COLORS_BY_INDEX_LIGHT;
+    const cmTheme = isDark ? 'material-darker' : 'default';
+    codeEditor.setOption('theme', cmTheme);
+    queryEditor.setOption('theme', cmTheme);
+    // Existing capture marks were coloured from the old palette; recolour them.
     handleQueryChange();
   }
 
