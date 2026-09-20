@@ -20,8 +20,6 @@ let tree;
     'sienna',
   ];
 
-  const scriptURL = document.currentScript.getAttribute('src');
-
   const codeInput = document.getElementById('code-input');
   const languageSelect = document.getElementById('language-select');
   const loggingCheckbox = document.getElementById('logging-checkbox');
@@ -179,7 +177,7 @@ let tree;
           const start = cursor.startPosition;
           const end = cursor.endPosition;
           const id = cursor.nodeId;
-          let fieldName = cursor.currentFieldName();
+          let fieldName = cursor.currentFieldName;
           if (fieldName) {
             fieldName += ': ';
           } else {
@@ -221,11 +219,10 @@ let tree;
       marks.forEach(m => m.clear());
 
       if (tree && query) {
-        const captures = query.captures(
-          tree.rootNode,
-          {row: startRow, column: 0},
-          {row: endRow, column: 0},
-        );
+        const captures = query.captures(tree.rootNode, {
+          startPosition: {row: startRow, column: 0},
+          endPosition: {row: endRow, column: 0},
+        });
         let lastNodeId;
         for (const {name, node} of captures) {
           if (node.id === lastNodeId) continue;
@@ -344,9 +341,9 @@ let tree;
       const containerHeight = outputContainerScroll.clientHeight;
       const offset = treeRowHighlightedIndex * lineHeight;
       if (scrollTop > offset - 20) {
-        $(outputContainerScroll).animate({scrollTop: offset - 20}, 150);
+        outputContainerScroll.scrollTo({top: offset - 20, behavior: 'smooth'});
       } else if (scrollTop < offset + lineHeight + 40 - containerHeight) {
-        $(outputContainerScroll).animate({scrollTop: offset - containerHeight + 40}, 150);
+        outputContainerScroll.scrollTo({top: offset - containerHeight + 40, behavior: 'smooth'});
       }
     }
   }

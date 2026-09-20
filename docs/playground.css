@@ -1,11 +1,30 @@
-body {
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#fork-banner {
+  flex: none;
+  background: #6b3fa0;
+  color: #fff;
+  font: 12px/28px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+#fork-banner a {
+  color: #fff;
+}
+
 #playground-container {
   width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
