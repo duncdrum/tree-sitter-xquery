@@ -1,0 +1,63 @@
+name: Deploy playground to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "grammar.js"
+      - "src/scanner.c"
+      - "queries/**"
+      - "docs/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+env:
+  TREE_SITTER_VERSION: "0.27.0"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deployment at a time; let in-flight runs finish rather than
+# racing a newer one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+
+      - name: Install tree-sitter CLI
+        run: npm install --no-save "tree-sitter-cli@${TREE_SITTER_VERSION}"
+
+      - name: Generate parser
+        run: npx tree-sitter generate
+
+      - name: Build the wasm grammar
+        # tree-sitter-cli fetches its own wasi-sdk toolchain, no
+        # Emscripten/Docker setup needed.
+        run: npx tree-sitter build --wasm -o docs/tree-sitter-xquery.wasm
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

@@ -56,11 +56,10 @@ buildr: ## build wasm then open web ui
 	yarn build
 
 tree-sitter-xquery.wasm: buildr
-	source /home/gmack/projects/emsdk/emsdk_env.sh &&
 	yarn build-wasm
 
 .PHONY: docs
-docs: tree-sitter-xquery.wasm ## publish to gh pages
+docs: tree-sitter-xquery.wasm ## refresh the local playground copy (CI deploys docs/ to GitHub Pages on push to main)
 	mkdir -p docs
 	cp -v $< docs/
 	cp -v node_modules/web-tree-sitter/tree-sitter.wasm docs/
